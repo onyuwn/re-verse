@@ -1,24 +1,5 @@
-# README
+# Playlist App (name tbd)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+##Install rails on your computer
+This app utilizes Ruby on Rails, to run you need to set up a development environment on your computer.
+Check out [this](https://gorails.com/setup/osx/10.14-mojave) guide.
