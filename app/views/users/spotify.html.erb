@@ -1,0 +1,4 @@
+<h1>Dashboard</h1>
+<%= @user.display_name %>
+<img src=<%= @user.images[0]['url'] %>/>
+<%=link_to 'create', {:controller => "playlists", :action => "index", :user => @user.to_hash} %>

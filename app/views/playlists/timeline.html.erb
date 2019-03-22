@@ -1,0 +1,14 @@
+<h1><%= @playlist_name %> timeline</h1>
+
+<table>
+  <tr>
+    <th>track</th>
+    <th>action</th>
+  </tr>
+  <% @playlist.tracks.each do |t| %>
+    <tr>
+      <td><%= t.name %></td>
+      <td><%=link_to 'edit', {:controller => 'playlists', :action => 'edit'}%></td>
+    </tr>
+  <% end %>
+</table>
