@@ -1,0 +1,27 @@
+<% if request.method.eql? "GET" %>
+  <%= form_with scope: :track, url: playlists_edit_path, local: true do |form| %>
+    <p>
+      <%= form.label :memory %><br>
+      <%= form.text_area :memory %>
+    </p>
+
+    <p>
+      <%= form.hidden_field :playlist_name, :value => params[:playlist_name] %>
+    </p>
+
+    <p>
+      <%= form.hidden_field :username, :value => params[:user][:display_name] %>
+    </p>
+
+    <p>
+      <%= form.hidden_field :title, :value => params[:track_name] %>
+    </p>
+
+    <p>
+      <%= form.submit %>
+    </p>
+  <% end %>
+<% else %>
+  <h1>memory <%= @action %></h1>
+  <%=link_to 'back', {:controller => "playlists", :action => "timeline", :user => RSpotify::User.find(params[:track][:username]).to_hash, :playlist => params[:track][:playlist_name]} %>
+<% end %>

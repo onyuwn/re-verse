@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   get 'playlists/index'
   get 'playlists/edit'
   get 'welcome/index'
+  get 'players/index'
+
+  post 'playlists/timeline'
+  post 'playlists/edit'
 
   resources :users
 

@@ -1,0 +1,20 @@
+<h1><%= @user.display_name %>'s playlists</h1>
+<ul>
+  <% @playlists.each do |key, val| %>
+    <li>
+      <h3><%= key %></h3>
+      <table>
+        <tr>
+          <th>Tracks</th>
+          <th>Memory</th>
+        </tr>
+        <% @playlists[key].each do |tracks| %>
+          <tr>
+            <td><%= tracks[0] %></td>
+            <td><%= tracks[1] %></td>
+          </tr>
+        <% end %>
+      </table>
+    </li>
+  <% end %>
+</ul>
