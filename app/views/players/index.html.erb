@@ -1,8 +1,9 @@
 <h1><%= @user.display_name %>'s playlists</h1>
+<h3>Currently Playing: <%= @current_song %></h3>
 <ul>
   <% @playlists.each do |key, val| %>
     <li>
-      <h3><%= key %></h3>
+      <h3><%= link_to key.to_s, {:controller => "players", :action => "play", :user => @user.to_hash, :playlist_uri => @playlist_uri} %></h3>
       <table>
         <tr>
           <th>Tracks</th>

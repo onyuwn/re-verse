@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'playlists/edit'
   get 'welcome/index'
   get 'players/index'
+  get 'players/play'
 
   post 'playlists/timeline'
   post 'playlists/edit'
