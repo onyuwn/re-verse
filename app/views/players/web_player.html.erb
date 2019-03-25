@@ -1,0 +1,30 @@
+<% @playlists_new.each do |t_info| %>
+  <% if t_info[0][0].eql? @current_song %>
+    <body>
+      <%= link_to 'back', {:controller => "players", :action => "index", :user => @user.to_hash} %>
+      <h1>Player</h1>
+      <div id="player">
+        <div id="track-info">
+          <img id="track-cover" src=<%=@player_response['item']['album']['images'][0]['url'].to_s%>></img>
+          <h3 id="track-name"><%= @current_song %></h3>
+          <h3 id="artist-name"><%= @player_response['item']['artists'][0]['name'] %></h3>
+        </div>
+
+        <div id="memories">
+          <h3 id="text-memory"><%= t_info[1][0] %></h3>
+        </div>
+      </div>
+    <body>
+
+    <style>
+      body {
+        background:
+          linear-gradient(
+            rgba(30, 32, 35, 0.45),
+            rgba(30, 32, 35, 0.45)
+          ),
+          url(<%= t_info[2][0].to_s %>);
+      }
+    </style>
+  <% end %>
+<% end %>

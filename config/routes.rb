@@ -5,13 +5,15 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'players/index'
   get 'players/play'
+  get 'players/web_player'
+  get 'users/dashboard'
 
   post 'playlists/timeline'
   post 'playlists/edit'
 
   resources :users
 
-  get '/auth/spotify/callback', to: 'users#spotify'
+  get '/auth/spotify/callback', to: 'users#login'
 
   root 'welcome#index'
 end

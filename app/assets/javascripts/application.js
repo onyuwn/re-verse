@@ -14,3 +14,8 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+
+setInterval(function(){
+  console.log('ooeoe')
+}, 1000);

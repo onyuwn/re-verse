@@ -19,20 +19,27 @@ class PlayersController < ApplicationController
         end
       end
 
-      @playlists[t.playlist_name] << [t.title, t.memory, @playlist_uri]
+      @playlists[t.playlist_name] << [t.title, t.memory, t.imageurl, @playlist_uri]
     end
 
     @player_response = RSpotify.resolve_auth_request(@user.display_name, "me/player/")
-    @current_song = @player_response['item']['name']
+    @current_song = @player_response
+    if @current_song.nil?
+      @current_song = " "
+    else
+      @current_song = @player_response['item']['name']
+    end
   end
-
+  #plays playlist
   def play
     params.require(:user).permit!
     @user = RSpotify::User.new(params[:user]);
     @uri = URI('https://api.spotify.com/v1/me/player/play')
+    #request body tells spotify what playlist to play
     @body = {
       "context_uri": params[:playlist_uri]
     }.to_json
+    #headers
     req = Net::HTTP::Put.new(@uri.path, initheader = {'Content-Type' =>'application/json', 'Authorization' => 'Bearer ' + @user.credentials['token'].to_s})
     req.body = @body
     http = Net::HTTP.new(@uri.host, @uri.port)
@@ -40,6 +47,28 @@ class PlayersController < ApplicationController
     response = http.start {|h|
       h.request(req)
     }
-    redirect_to :action => "index", :user => @user.to_hash
+    sleep 1.5
+    #redirecting to new action so the user can refresh the web player and not restart the playlist
+    redirect_to :action => "web_player", :user => @user.to_hash, :playlist_info => params[:playlist_info]
+  end
+
+  def web_player
+    params.require(:user).permit!
+    @user = RSpotify::User.new(params[:user]);
+    #get currrent song playing to decide what memory to display
+    @player_response = RSpotify.resolve_auth_request(@user.display_name, "me/player/")
+    @current_song = @player_response
+    if @current_song.nil?
+      @current_song = " "
+    else
+      @current_song = @player_response['item']['name']
+    end
+
+    @playlists = params[:playlist_info]
+    @playlists_new = []
+    #uhh so the playlists hash gets fucked so i'm rebuilding it here hehehe
+    (@playlists.length/4).times do |t|
+      @playlists_new << [@playlists[(t * 4)], @playlists[(t * 4) + 1], @playlists[(t * 4) + 2]]
+    end
   end
 end

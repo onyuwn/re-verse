@@ -1,18 +1,21 @@
+<%= link_to "back", {:controller => "users", :action => "dashboard", :user=>@user.to_hash} %>
 <h1><%= @user.display_name %>'s playlists</h1>
 <h3>Currently Playing: <%= @current_song %></h3>
 <ul>
   <% @playlists.each do |key, val| %>
     <li>
-      <h3><%= link_to key.to_s, {:controller => "players", :action => "play", :user => @user.to_hash, :playlist_uri => @playlist_uri} %></h3>
+      <h3><%= link_to key.to_s, {:controller => "players", :action => "play", :user => @user.to_hash, :playlist_uri => @playlists[key][0][3], :playlist_info => @playlists[key]} %></h3>
       <table>
         <tr>
           <th>Tracks</th>
           <th>Memory</th>
+          <th>Image</th>
         </tr>
         <% @playlists[key].each do |tracks| %>
           <tr>
             <td><%= tracks[0] %></td>
             <td><%= tracks[1] %></td>
+            <td><img src=<%= tracks[2].to_s %>></img></td>
           </tr>
         <% end %>
       </table>

@@ -29,7 +29,7 @@ class PlaylistsController < ApplicationController
         @action = "created"
       else
         @track = Track.where(:username => params[:track][:username], :title => params[:track][:title], :playlist_name => params[:track][:playlist_name])
-        @track.update(memory: params[:track][:memory])
+        @track.update(memory: params[:track][:memory], imageurl: params[:track][:imageurl])
         @action ="updated"
       end
 
