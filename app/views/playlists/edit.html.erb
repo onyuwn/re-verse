@@ -1,4 +1,8 @@
 <% if request.method.eql? "GET" %>
+
+  <%= link_to 'back', {:controller => 'playlists', :action => 'timeline', :user => params[:user], :playlist => params[:playlist_name]} %>
+  <h1>Add Memory</h1>
+
   <%= form_with scope: :track, url: playlists_edit_path, local: true do |form| %>
     <p>
       <%= form.label :memory %><br>

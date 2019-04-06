@@ -38,6 +38,8 @@ class PlayersController < ApplicationController
   def play
     params.require(:user).permit!
     @user = RSpotify::User.new(params[:user]);
+    Rails.logger.debug "fuckk"
+    Rails.logger.debug @user.inspect
     @uri = URI('https://api.spotify.com/v1/me/player/play')
     #request body tells spotify what playlist to play
     @body = {

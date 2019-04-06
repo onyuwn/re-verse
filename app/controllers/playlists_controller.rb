@@ -21,6 +21,10 @@ class PlaylistsController < ApplicationController
   end
 
   def edit
+    if request.method.eql? "GET"
+      params.require(:user).permit!
+    end
+    
     if request.method.eql? "POST"
       params.require(:track).permit!
       if Track.where(:username => params[:track][:username], :title => params[:track][:title], :playlist_name => params[:track][:playlist_name]).empty?
