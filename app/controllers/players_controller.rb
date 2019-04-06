@@ -1,6 +1,10 @@
 require 'net/http'
+require 'json'
 
 class PlayersController < ApplicationController
+
+  protect_from_forgery except: :web_player
+
   def index
     params.require(:user).permit!
     @playlists = Hash.new
