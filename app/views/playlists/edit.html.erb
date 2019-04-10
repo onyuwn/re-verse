@@ -1,25 +1,37 @@
 <% if request.method.eql? "GET" %>
 
-  <%= link_to 'back', {:controller => 'playlists', :action => 'timeline', :user => params[:user], :playlist => params[:playlist_name]} %>
+  <%= link_to 'back', {:controller => 'playlists', :action => 'timeline', :playlist => params[:playlist_name], :offset => params[:offset]} %>
   <h1>Add Memory</h1>
 
   <%= form_with scope: :track, url: playlists_edit_path, local: true do |form| %>
-    <p>
-      <%= form.label :memory %><br>
-      <%= form.text_area :memory %>
-    </p>
+    <% if params[:update].eql? 'yaw' %>
+      <p>
+        <%= form.label :memory %><br>
+        <%= form.text_area :memory, :value => @track[0].memory %>
+      </p>
 
-    <p>
-      <%= form.label :imageurl %><br>
-      <%= form.text_field :imageurl %>
-    </p>
+      <p>
+        <%= form.label :imageurl %><br>
+        <%= form.text_field :imageurl, :value => @track[0].imageurl %>
+      </p>
+    <% else %>
+      <p>
+        <%= form.label :memory %><br>
+        <%= form.text_area :memory %>
+      </p>
+
+      <p>
+        <%= form.label :imageurl %><br>
+        <%= form.text_field :imageurl %>
+      </p>
+    <% end %>
 
     <p>
       <%= form.hidden_field :playlist_name, :value => params[:playlist_name] %>
     </p>
 
     <p>
-      <%= form.hidden_field :username, :value => params[:user][:display_name] %>
+      <%= form.hidden_field :username, :value => session[:user]['display_name'] %>
     </p>
 
     <p>

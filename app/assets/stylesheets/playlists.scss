@@ -5,3 +5,71 @@ img {
   height: 10%;
   width: 10%;
 }
+
+#playlist-header {
+  text-align: center;
+}
+
+#edit {
+  background-color: #2981ce;
+  text-align: center;
+  display:block;
+  margin-left:45%;
+  margin-right:45%;
+}
+
+#edit:hover {
+  background-color: #1e5f99;
+}
+
+#current-track {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top:0;
+  left:0;
+}
+
+.track-art {
+  display:inline-block;
+  height:30%;
+  width: 30%;
+  padding:10px;
+}
+
+.previous-track-art {
+  display:inline-block;
+  height:30%;
+  width: 30%;
+  padding:10px;
+}
+
+.button {
+  display:inline;
+  padding: 10px;
+}
+
+.button a {
+  text-decoration:none;
+}
+
+.track-name {
+  text-align:center;
+}
+
+.memory {
+  text-align:center;
+}
+
+#next-track {
+  background-color:#68d16d;
+  position:absolute;
+  right:0;
+}
+
+#previous-track {
+  background-color:#68d16d;
+  position:absolute;
+  left:0;
+}

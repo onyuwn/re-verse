@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def login
     @user = RSpotify::User.new(request.env['omniauth.auth'])
+    session[:user] = @user.to_hash
     redirect_to :action=>"dashboard", :user => @user.to_hash
   end
 end

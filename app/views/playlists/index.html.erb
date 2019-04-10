@@ -8,7 +8,7 @@
   </tr>
   <% @playlists.each do |p| %>
   <tr>
-    <td><%= link_to p.name.to_s, {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash} %></td>
+    <td><%= link_to p.name.to_s, {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0} %></td>
     <td>
       <ul>
         <% p.tracks.each do |t| %>

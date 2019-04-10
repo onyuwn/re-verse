@@ -1,15 +1,45 @@
-<%=link_to 'back', {:controller => 'playlists', :action => 'index', :user => @user.to_hash}%>
-<h1><%= @playlist_name %> timeline</h1>
+<body>
+  <%=link_to 'back', {:controller => 'playlists', :action => 'index', :user => @user.to_hash}%>
+  <h1 id='playlist-header'><%= @playlist_name %> timeline</h1>
 
-<table>
-  <tr>
-    <th>track</th>
-    <th>action</th>
-  </tr>
-  <% @playlist.tracks.each do |t| %>
-    <tr>
-      <td><%= t.name %></td>
-      <td><%=link_to 'edit', {:controller => 'playlists', :action => 'edit', :user => @user.to_hash, :playlist_name => @playlist_name, :track_name => t.name}%></td>
-    </tr>
+  <div id="current-track">
+    <% if @offset > 0 and @offset < @playlist.tracks.length %>
+      <!--<img class='previous-track-art' src=<%= @playlist.tracks[@offset - 1].album.images[0]['url'].to_s %>>-->
+    <% elsif @offset == 0 %>
+      <!--<img class='previous-track-art' src=<%= @playlist.tracks[@playlist.tracks.length - 1].album.images[0]['url'].to_s %>>-->
+    <% elsif @offset == @playlist.tracks.length - 1 %>
+      <!--<img class='previous-track-art' src=<%= @playlist.tracks[0].album.images[0]['url'].to_s %>>-->
+    <% end %>
+    <img class='track-art' src=<%= @playlist.tracks[@offset].album.images[0]['url'].to_s %>>
+    <p class='button' id='next-track'><%= link_to 'next track', {:controller => 'playlists', :action => 'timeline', :playlist => @playlist_name, :user => @user.to_hash, :offset => @offset + 1} %></p>
+    <p class='button' id='previous-track'><%= link_to 'previous track', {:controller => 'playlists', :action => 'timeline', :playlist => @playlist_name, :user => @user.to_hash, :offset => @offset - 1} %></p>
+  </div>
+
+  <h3 class='track-name'><%= @playlist.tracks[@offset].name %></h3>
+
+  <% unless @track.nil? %>
+    <h4 class='memory'><%= @track.memory %></h4>
   <% end %>
-</table>
+
+  <% if @track.nil? %>
+    <p id='edit' class='button'><%=link_to 'edit', {:controller => 'playlists', :action => 'edit', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset, :update => 'naw'}%></p>
+  <% else %>
+    <p id='edit' class='button'><%=link_to 'edit', {:controller => 'playlists', :action => 'edit', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset, :update => 'yaw'}%></p>
+  <% end %>
+  <!--TODO: This probably doesn't work. The play action pulls from that ugly playlist-info thing in params, you need to rebuild that or find a better way-->
+  <p><%=link_to 'play', {:controller => 'players', :action => 'play', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset} %></p>
+
+</body>
+
+<% unless @track.nil? %>
+  <style>
+    body {
+      background:
+        linear-gradient(
+          rgba(30, 32, 35, 0.45),
+          rgba(30, 32, 35, 0.45)
+        ),
+        url(<%= @track.imageurl %>);
+    }
+  </style>
+<% end %>
