@@ -2,8 +2,7 @@ require 'json'
 
 class PlaylistsController < ApplicationController
   def index
-    params.require(:user).permit!
-    @user = RSpotify::User.new(params[:user])
+    @user = RSpotify::User.new(session[:user])
     @playlists =  @user.playlists
   end
 

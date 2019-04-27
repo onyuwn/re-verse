@@ -1,21 +1,14 @@
-<%= link_to 'back', {:controller => 'users', :action => 'dashboard', :user => @user.to_hash} %>
-<h1> <%= @user.display_name %>'s playlists</h1>
+<h1> <%= @user.display_name %>'s dashboard</h1>
 
-<table>
-  <tr>
-    <th>Playlist</th>
-    <th>Tracks</th>
-  </tr>
-  <% @playlists.each do |p| %>
-  <tr>
-    <td><%= link_to p.name.to_s, {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0} %></td>
-    <td>
-      <ul>
-        <% p.tracks.each do |t| %>
-          <li><%=t.name %></li>
-        <% end %>
-      </ul>
-    </td>
-  </tr>
-  <% end %>
-</table>
+<div id="playlist-sidebar" class="sidebar">
+  <table>
+    <tr>
+      <th>Playlists</th>
+    </tr>
+    <% @playlists.each do |p| %>
+      <tr>
+        <td><%= link_to p.name.to_s, {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0} %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

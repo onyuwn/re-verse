@@ -36,12 +36,26 @@ class PlayersController < ApplicationController
   end
   #plays playlist
   def play
-    params.require(:user).permit!
     @user = RSpotify::User.new(session[:user]);
+    @playlists = []
+    Rails.logger.debug "FUFUF"
+    Rails.logger.debug params[:playlist_name]
+    @tracks = Track.where(username: @user.display_name, playlist_name: params[:playlist_name])
+
+    @user.playlists.each do |p|
+      if p.name.eql? params[:playlist_name]
+        @playlist_uri = p.uri
+      end
+    end
+
+    @tracks.each do |t|
+      @playlists << [t.title, t.memory, t.imageurl, @playlist_uri]
+    end
+
     @uri = URI('https://api.spotify.com/v1/me/player/play')
     #request body tells spotify what playlist to play
     @body = {
-      "context_uri": params[:playlist_uri]
+      "context_uri": @playlist_uri
     }.to_json
     #headers
     req = Net::HTTP::Put.new(@uri.path, initheader = {'Content-Type' =>'application/json', 'Authorization' => 'Bearer ' + @user.credentials['token'].to_s})
@@ -53,11 +67,11 @@ class PlayersController < ApplicationController
     }
     sleep 1.5
     #redirecting to new action so the user can refresh the web player and not restart the playlist
-    redirect_to :action => "web_player", :playlist_info => params[:playlist_info]
+    #TODO: fucks up if track being played has no memory (nothing is displayed)
+    redirect_to :action => "web_player", :playlist_info => @playlists
   end
 
   def web_player
-    params.require(:user).permit!
     @user = RSpotify::User.new(session[:user]);
     #get currrent song playing to decide what memory to display
     @player_response = RSpotify.resolve_auth_request(@user.display_name, "me/player/")

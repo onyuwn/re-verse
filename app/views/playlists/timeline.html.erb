@@ -1,6 +1,6 @@
 <body>
   <%=link_to 'back', {:controller => 'playlists', :action => 'index', :user => @user.to_hash}%>
-  <h1 id='playlist-header'><%= @playlist_name %> timeline</h1>
+  <h1 id='playlist-header'><%= @playlist_name %></h1>
 
   <div id="current-track">
     <% if @offset > 0 and @offset < @playlist.tracks.length %>
@@ -27,7 +27,7 @@
     <p id='edit' class='button'><%=link_to 'edit', {:controller => 'playlists', :action => 'edit', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset, :update => 'yaw'}%></p>
   <% end %>
   <!--TODO: This probably doesn't work. The play action pulls from that ugly playlist-info thing in params, you need to rebuild that or find a better way-->
-  <p><%=link_to 'play', {:controller => 'players', :action => 'play', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset} %></p>
+  <p id='play' class='button'><%=link_to 'play', {:controller => 'players', :action => 'play', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name} %></p>
 
 </body>
 

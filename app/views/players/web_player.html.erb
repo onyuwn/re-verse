@@ -2,7 +2,7 @@
 <% @playlists_new.each do |t_info| %>
   <% if t_info[0][0].eql? @current_song %>
     <body>
-      <%= link_to 'back', {:controller => "players", :action => "index", :user => @user.to_hash} %>
+      <%= link_to 'back', {:controller => "playlists", :action => "index"} %>
       <h1>Player</h1>
       <div id="player">
         <div id="track-info">

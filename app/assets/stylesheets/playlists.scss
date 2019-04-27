@@ -1,6 +1,19 @@
 // Place all the styles related to the Playlists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+h1 {
+  text-align:center;
+  background-color:black;
+  color:white;
+  margin-top:-1.5%;
+  padding-top:1%;
+  padding-bottom:1%;
+}
+
+body {
+  background-color:#424242;
+}
+
 img {
   height: 10%;
   width: 10%;
@@ -10,7 +23,7 @@ img {
   text-align: center;
 }
 
-#edit {
+#edit, #play {
   background-color: #2981ce;
   text-align: center;
   display:block;
@@ -18,7 +31,7 @@ img {
   margin-right:45%;
 }
 
-#edit:hover {
+#edit:hover, #play:hover {
   background-color: #1e5f99;
 }
 
@@ -72,4 +85,33 @@ img {
   background-color:#68d16d;
   position:absolute;
   left:0;
+}
+
+#playlist-sidebar td{
+  background-color:#666666;
+}
+
+#playlist-sidebar{
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+.sidebar {
+  margin-top:3%;
+  margin-right: 80%;
+  background-color:black;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:1;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color:inherit;
+  color:white;
+}
+
+.sidebar a:hover {
+  color:#c9c9c9;
 }
