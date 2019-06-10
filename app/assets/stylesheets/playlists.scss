@@ -1,22 +1,81 @@
 // Place all the styles related to the Playlists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-h1 {
-  text-align:center;
-  background-color:black;
-  color:white;
-  margin-top:-1.5%;
-  padding-top:1%;
-  padding-bottom:1%;
+
+#timeline-item {
+  display: inline-block;
+  width: 100%;
+  padding-left: 4%;
+  padding-right: 4%;
+  flex:1;
 }
 
-body {
-  background-color:#424242;
+#timeline-item a{
+  padding: 2%;
+}
+
+#timeline-item ul{
+  width:100%;
+  display:inline-block;
+  list-style:none;
+}
+
+#timeline-container{
+  width:100%;
+  display: flex;
+}
+
+#moment-id {
+  width:100%;
+  background-color:green;
+  display: inline-block;
+}
+
+#playlist-id {
+  width:100%;
+  background-color:blue;
+  display: inline-block;
+}
+
+hr {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color:#666;
+  position: fixed;
 }
 
 img {
-  height: 10%;
-  width: 10%;
+  box-shadow: 5px 5px 5px #ccc;
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+img:hover {
+  box-shadow: 10px 10px 5px #ccc;
+}
+
+#timeline-nav {
+  text-align:center;
+  background-color:#262626;
+  color:white;
+  position:fixed;
+  width: 100%;
+  padding: 2%;
+}
+
+#timeline-nav a {
+  display: inline block;
+  background-color: #474747;
+  padding: 10px;
+}
+
+body {
+  background-color:black;
+  font-family: 'Poppins', sans-serif;
+}
+
+#timeline-container {
+  padding-top: 15%;
 }
 
 #playlist-header {
@@ -44,12 +103,12 @@ img {
   left:0;
 }
 
-.track-art {
-  display:inline-block;
-  height:30%;
-  width: 30%;
-  padding:10px;
-}
+// .track-art {
+//   display:inline;
+//   height:30%;
+//   width: 30%;
+//   padding:10px;
+// }
 
 .previous-track-art {
   display:inline-block;
@@ -87,31 +146,31 @@ img {
   left:0;
 }
 
-#playlist-sidebar td{
-  background-color:#666666;
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
 }
 
-#playlist-sidebar{
-  padding-left: 1%;
-  padding-right: 1%;
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
 }
 
-.sidebar {
-  margin-top:3%;
-  margin-right: 80%;
-  background-color:black;
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:1;
+.selected-track {
+  height: 30%;
+  transition: height 2s;
 }
 
-.sidebar a {
-  text-decoration: none;
-  color:inherit;
-  color:white;
-}
+// .playist-cover {
+//   height:7%;
+//   display:inline-block;
+// }
 
-.sidebar a:hover {
-  color:#c9c9c9;
-}
+// .track-cover {
+//   height:10%;
+//   display:inline-block;
+// }

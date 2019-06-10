@@ -1,0 +1,27 @@
+<script language="javascript" type="text/javascript">
+  function updateTrackList()
+  {
+    var e = document.getElementById('playlist-select');
+    var playlistName = e.options[e.selectedIndex].value;
+    document.getElementById(playlistName).style.display = "block";
+  }
+</script>
+
+<select id="playlist-select" onchange="updateTrackList()">
+  <% @playlists.each do |p| %>
+    <option value="<%= p.name %>"><%= p.name %></option>
+  <% end %>
+</select>
+
+<%= form_with url: playlists_add_memory_path, local: true do |form| %>
+  <div id='track-select'>
+    <% @playlists_h.keys.each do |k| %>
+      <div id="<%=k%>" style="display:none">
+        <% @playlists_h[k].each do |t| %>
+          <%= form.radio_button k, t %><%=t%><br>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <%= form.submit %>
+<% end %>

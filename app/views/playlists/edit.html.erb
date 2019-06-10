@@ -1,48 +1,50 @@
-<% if request.method.eql? "GET" %>
+<div id="modal-body">
+  <% if request.method.eql? "GET" %>
 
-  <%= link_to 'back', {:controller => 'playlists', :action => 'timeline', :playlist => params[:playlist_name], :offset => params[:offset]} %>
-  <h1>Add Memory</h1>
+    <%= link_to 'back', {:controller => 'playlists', :action => 'timeline', :playlist => params[:playlist_name], :offset => params[:offset]} %>
+    <h1>Add Memory</h1>
 
-  <%= form_with scope: :track, url: playlists_edit_path, local: true do |form| %>
-    <% if params[:update].eql? 'yaw' %>
+    <%= form_with scope: :track, url: playlists_edit_path, local: true do |form| %>
+      <% if params[:update].eql? 'yaw' %>
+        <p>
+          <%= form.label :memory %><br>
+          <%= form.text_area :memory, :value => @track[0].memory %>
+        </p>
+
+        <p>
+          <%= form.label :imageurl %><br>
+          <%= form.text_field :imageurl, :value => @track[0].imageurl %>
+        </p>
+      <% else %>
+        <p>
+          <%= form.label :memory %><br>
+          <%= form.text_area :memory %>
+        </p>
+
+        <p>
+          <%= form.label :imageurl %><br>
+          <%= form.text_field :imageurl %>
+        </p>
+      <% end %>
+
       <p>
-        <%= form.label :memory %><br>
-        <%= form.text_area :memory, :value => @track[0].memory %>
+        <%= form.hidden_field :playlist_name, :value => params[:playlist_name] %>
       </p>
 
       <p>
-        <%= form.label :imageurl %><br>
-        <%= form.text_field :imageurl, :value => @track[0].imageurl %>
-      </p>
-    <% else %>
-      <p>
-        <%= form.label :memory %><br>
-        <%= form.text_area :memory %>
+        <%= form.hidden_field :username, :value => session[:user]['display_name'] %>
       </p>
 
       <p>
-        <%= form.label :imageurl %><br>
-        <%= form.text_field :imageurl %>
+        <%= form.hidden_field :title, :value => params[:track_name] %>
+      </p>
+
+      <p>
+        <%= form.submit %>
       </p>
     <% end %>
-
-    <p>
-      <%= form.hidden_field :playlist_name, :value => params[:playlist_name] %>
-    </p>
-
-    <p>
-      <%= form.hidden_field :username, :value => session[:user]['display_name'] %>
-    </p>
-
-    <p>
-      <%= form.hidden_field :title, :value => params[:track_name] %>
-    </p>
-
-    <p>
-      <%= form.submit %>
-    </p>
+  <% else %>
+    <h1>memory <%= @action %></h1>
+    <%=link_to 'back', {:controller => "playlists", :action => "timeline", :user => RSpotify::User.find(params[:track][:username]).to_hash, :playlist => params[:track][:playlist_name]} %>
   <% end %>
-<% else %>
-  <h1>memory <%= @action %></h1>
-  <%=link_to 'back', {:controller => "playlists", :action => "timeline", :user => RSpotify::User.find(params[:track][:username]).to_hash, :playlist => params[:track][:playlist_name]} %>
-<% end %>
+</div>

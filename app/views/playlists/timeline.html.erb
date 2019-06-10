@@ -24,11 +24,16 @@
   <% if @track.nil? %>
     <p id='edit' class='button'><%=link_to 'edit', {:controller => 'playlists', :action => 'edit', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset, :update => 'naw'}%></p>
   <% else %>
-    <p id='edit' class='button'><%=link_to 'edit', {:controller => 'playlists', :action => 'edit', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset, :update => 'yaw'}%></p>
+    <p id='edit' class='button'><%=link_to 'edit', {:controller => 'playlists', :action => 'edit', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name, :offset => @offset, :update => 'yaw', :modal => true}%></p>
   <% end %>
   <!--TODO: This probably doesn't work. The play action pulls from that ugly playlist-info thing in params, you need to rebuild that or find a better way-->
   <p id='play' class='button'><%=link_to 'play', {:controller => 'players', :action => 'play', :playlist_name => @playlist_name, :track_name => @playlist.tracks[@offset].name} %></p>
 
+  <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
 </body>
 
 <% unless @track.nil? %>

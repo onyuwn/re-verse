@@ -1,0 +1,45 @@
+<%= form_with scope: :track, url: playlists_index_path, local: true do |form| %>
+  <p>
+    <%= form.label :memory %><br>
+    <%= form.text_area :memory %>
+  </p>
+
+  <p>
+    <%= form.label :memory_date %><br>
+    <%= form.date_field :memory_date %>
+  </p>
+
+  <p>
+    <%= form.label :imageurl %><br>
+    <%= form.text_field :imageurl %>
+  </p>
+
+  <script language="javascript" type="text/javascript">
+    function updateTrackList()
+    {
+      var e = document.getElementById('track_playlist_name');
+      var playlistName = e.options[e.selectedIndex].value;
+      document.getElementById(playlistName).style.display = "block";
+    }
+  </script>
+
+  <%= form.select :playlist_name, @playlists.collect {|p| [p.name, p.name]}, {include_blank: true}, {onChange: "updateTrackList()"}%>
+
+  <div id='track-select'>
+    <% @playlists_h.keys.each do |k| %>
+      <div id="<%=k%>" style="display:none">
+        <% @playlists_h[k].each do |t| %>
+          <%= form.radio_button :title, t %><%=t%><br>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <p>
+    <%= form.hidden_field :username, :value => session[:user]['display_name'] %>
+  </p>
+
+  <p>
+    <%= form.submit "Save Memory", {:class => "btn btn-primary"}%>
+  </p>
+<% end %>

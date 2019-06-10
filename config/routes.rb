@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   get 'playlists/timeline'
   get 'playlists/index'
-  get 'playlists/edit'
+  get 'playlists/add_memory'
+  get 'playlists/edit' => 'playlists/edit', :as => :edit
   get 'welcome/index'
   get 'players/index'
   get 'players/play'
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
 
   post 'playlists/timeline'
   post 'playlists/edit'
+  post 'playlists/add_memory'
+  post 'playlists/index'
 
   resources :users
 

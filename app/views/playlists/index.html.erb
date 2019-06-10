@@ -1,14 +1,54 @@
-<h1> <%= @user.display_name %>'s dashboard</h1>
+<div class="modal fade" id="addMemory" tabindex="-1" role="dialog" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMemoryModalLabel">Add Memory</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "playlists/memory_form" %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div id="playlist-sidebar" class="sidebar">
-  <table>
-    <tr>
-      <th>Playlists</th>
-    </tr>
-    <% @playlists.each do |p| %>
-      <tr>
-        <td><%= link_to p.name.to_s, {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0} %></td>
-      </tr>
-    <% end %>
-  </table>
+<div class="modal fade" id="defineMoment" tabindex="-1" role="dialog" aria-labelledby="defineMomentModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="defineMomentModalLabel">Define Moment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "playlists/moment_form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="timeline-nav">
+  <h1> <%= @user.display_name %>'s timeline</h1>
+  <%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %>
+  <%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#defineMoment'} %>
+</div>
+
+<div id="timeline-container">
+  <% @timeline.reverse.each do |p| %>
+    <div id='timeline-item'>
+      <ul>
+        <% if p.class == RSpotify::Playlist %>
+          <li><%= link_to image_tag(p.images[0]['url'], id: p.name.to_s, class: "playlist-cover", title: p.tracks_added_at[p.tracks_added_at.keys[0]], height:"400%", width:"400%"), {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0}, class: "timeline-item" %></li>
+          <li><p id='playlist-id'>fuck</p></li>
+        <% else %>
+          <li><%= link_to image_tag(p[1].album.images[0]['url'], class: "track-cover", title: p[0].title.to_s, height: "400%", width:"400%"), {:controller => 'playlists', :action => 'timeline', :playlist => p[0].playlist_name, :user => @user.to_hash, :offset => 0}, id:p[0].title, class: "timeline-item" %></li>
+          <li><p id='moment-id'>fuck</p></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <hr size="100"/>
 </div>

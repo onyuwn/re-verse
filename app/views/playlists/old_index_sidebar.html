@@ -1,0 +1,34 @@
+<div class="wrapper">
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Playlists</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+      <li class="active">
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Playlists</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <% @playlists.each do |p| %>
+              <li>
+                <%= link_to p.name.to_s, {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0} %>
+              </li>
+              <
+            <% end %>
+          </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <% @playlists.reverse.each do |p| %>
+    <img src=<%= p.images[0]['url'] %>></img>
+  <% end %>
+  <%= @playlists[0].inspect %>
+
+  <div id="content">
+
+  </div>
+
+
+
+//uhhh
+  <%= link_to image_tag(p.images[0]['url'], id: p.name.to_s, class: "playlist-cover", title: p.tracks_added_at[p.tracks_added_at.keys[0]], onClick: "zoomIn(\'" + p.name.to_s + "\')"), {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0} %>
