@@ -2,39 +2,77 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#timeline-bar {
+  height:20px;
+  background-color: black;
+  vertical-align: middle;
+}
+
 #timeline-item {
   display: inline-block;
+  width: 25%;
+  padding-left: 2%;
+  padding-right: 2%;
+  text-align: center;
+}
+
+#timeline-item:hover > ul li h1 {
+  visibility: visible;
+  opacity: 1;
+}
+
+#timeline-item ul {
+  display: inline-block;
   width: 100%;
-  padding-left: 4%;
-  padding-right: 4%;
-  flex:1;
+  list-style: none;
 }
 
-#timeline-item a{
-  padding: 2%;
+#timeline-item li {
+  padding: 1%;
+  padding-top: 5%;
 }
 
-#timeline-item ul{
-  width:100%;
-  display:inline-block;
-  list-style:none;
+#timeline-container img{
+  display: block;
+  margin:auto;
 }
 
 #timeline-container{
   width:100%;
-  display: flex;
+  white-space: nowrap;
+  //display: flex;
 }
 
-#moment-id {
-  width:100%;
+.moment-id {
   background-color:green;
   display: inline-block;
+  text-align: center;
+  white-space: normal;
+  margin: 0 auto;
+  padding: 1%;
 }
 
-#playlist-id {
-  width:100%;
+.playlist-id {
   background-color:blue;
   display: inline-block;
+  text-align: center;
+  white-space: normal;
+  margin: 0 auto;
+  padding: 1%;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+#filter-controls {
+  display: inline-block;
+  float:right;
+}
+
+#main-controls {
+  text-align: center;
+  display:inline-block;
+  margin-left: 10%;
 }
 
 hr {
@@ -61,6 +99,7 @@ img:hover {
   position:fixed;
   width: 100%;
   padding: 2%;
+  margin: 0 auto;
 }
 
 #timeline-nav a {

@@ -9,7 +9,8 @@ class PlaylistsController < ApplicationController
     @user = RSpotify::User.new(session[:user])
     @playlists =  @user.playlists
     @tracks = Track.where(:username => @user.display_name).order(:memory_date)
-    @moments = Moment.where(:username => @user.display_name)
+    @moments = Moment.where(:user => @user.display_name)
+
     #TODO: make date picker
     count = 1
     @tracks.each do |t|
@@ -17,7 +18,7 @@ class PlaylistsController < ApplicationController
       count += 1
       t.save
     end
-    @tracks_array = @tracks.to_a
+    @tracks_array = @tracks.to_a #tracks (memories)
     @timeline = []
     @playlists.each do |p|
       p_time = p.tracks_added_at[p.tracks_added_at.keys[0]]
@@ -36,6 +37,11 @@ class PlaylistsController < ApplicationController
             matched_playlist.tracks_cache.each do |pt|
               if pt.name.eql? t.title
                 new_track << pt #add track object in along with memory
+              end
+            end
+            @moments.each do |m|
+              if t.memory_date <= m.end_date and t.memory_date >= m.start_date
+                new_track << m
               end
             end
             @timeline << new_track
@@ -58,8 +64,13 @@ class PlaylistsController < ApplicationController
     end
 
     if request.method.eql? "POST"
-      params.require(:track).permit!
-      Track.new(params[:track]).save
+      if params[:track].eql? nil
+        params.require(:moment).permit!
+        Moment.new(params[:moment]).save
+      else
+        params.require(:track).permit!
+        Track.new(params[:track]).save
+      end
     end
   end
 

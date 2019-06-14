@@ -18,6 +18,10 @@
   </p>
 
   <p>
-    <%= form.hidden_field :username, :value => session[:user]['display_name'] %>
+    <%= form.hidden_field :user, :value => session[:user]['display_name'] %>
+  </p>
+
+  <p>
+    <%= form.submit %>
   </p>
 <% end %>

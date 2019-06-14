@@ -7,4 +7,19 @@ $(document).ready(function () {
         $('#sidebar').toggleClass('active');
     });
 
+    $('#hide-playlists').on('click', function() {
+      if($('.playlist-dob').is(":hidden"))
+      {
+        console.log("fjdksl");
+        $('.playlist-dob').show(1000);
+        $('.playlist-id').show(1000);
+        $('#hide-playlists').attr('value', "Hide Playlists");
+      }
+      else
+      {
+        $('.playlist-dob').hide(1000);
+        $('.playlist-id').hide(1000);
+        $('#hide-playlists').attr('value', "Show Playlists");
+      }
+    });
 });
