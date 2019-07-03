@@ -1,7 +1,6 @@
 // Place all the styles related to the Playlists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
 #timeline-bar {
   height:20px;
   background-color: black;
@@ -35,6 +34,8 @@
 #timeline-container img{
   display: block;
   margin:auto;
+  box-shadow: 5px 5px 5px #ccc;
+  transition: box-shadow 0.1s ease-in-out;
 }
 
 #timeline-container{
@@ -65,14 +66,17 @@
 }
 
 #filter-controls {
-  display: inline-block;
+  display:inline;
   float:right;
 }
 
 #main-controls {
-  text-align: center;
-  display:inline-block;
-  margin-left: 10%;
+  display:block;
+}
+
+.back {
+  float: left;
+  display:inline;
 }
 
 hr {
@@ -81,14 +85,10 @@ hr {
   margin-right: auto;
   background-color:#666;
   position: fixed;
+  z-index: -1;
 }
 
-img {
-  box-shadow: 5px 5px 5px #ccc;
-  transition: box-shadow 0.1s ease-in-out;
-}
-
-img:hover {
+#timeline-container img:hover {
   box-shadow: 10px 10px 5px #ccc;
 }
 
@@ -99,11 +99,15 @@ img:hover {
   position:fixed;
   width: 100%;
   padding: 2%;
-  margin: 0 auto;
+  //margin: 0 auto;
+}
+
+#timeline-nav h1 {
+  display:inline;
 }
 
 #timeline-nav a {
-  display: inline block;
+  display: inline-block;
   background-color: #474747;
   padding: 10px;
 }
@@ -134,20 +138,16 @@ body {
 }
 
 #current-track {
-  display:flex;
+  text-align:center;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top:0;
-  left:0;
+  display:block;
 }
 
-// .track-art {
-//   display:inline;
-//   height:30%;
-//   width: 30%;
-//   padding:10px;
-// }
+.track-art {
+  height:30%;
+  width: 30%;
+}
 
 .previous-track-art {
   display:inline-block;
@@ -173,18 +173,6 @@ body {
   text-align:center;
 }
 
-#next-track {
-  background-color:#68d16d;
-  position:absolute;
-  right:0;
-}
-
-#previous-track {
-  background-color:#68d16d;
-  position:absolute;
-  left:0;
-}
-
 p {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
@@ -199,17 +187,24 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
+.nav-item {
+  text-align:center;
+  display:inline-block;
+}
+
 .selected-track {
   height: 30%;
   transition: height 2s;
 }
-
-// .playist-cover {
-//   height:7%;
-//   display:inline-block;
+//
+// #month-bar {
+//   display:block;
+//   position: absolute;
+//   top: 50%;
+//   z-index: -1;
 // }
 
-// .track-cover {
-//   height:10%;
-//   display:inline-block;
-// }
+#month-bar-item {
+  display:inline-block;
+  text-align:center;
+}

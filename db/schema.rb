@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_10_022546) do
+ActiveRecord::Schema.define(version: 2019_06_29_073054) do
 
   create_table "moments", force: :cascade do |t|
     t.string "name"
@@ -20,11 +20,21 @@ ActiveRecord::Schema.define(version: 2019_06_10_022546) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "user"
+    t.integer "timeline_id"
   end
 
   create_table "playlists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "timelines", force: :cascade do |t|
+    t.string "name"
+    t.string "creator"
+    t.string "subscribers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "last_update"
   end
 
   create_table "tracks", force: :cascade do |t|
@@ -36,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_06_10_022546) do
     t.datetime "updated_at", null: false
     t.string "imageurl"
     t.date "memory_date"
+    t.integer "timeline_id"
   end
 
 end

@@ -1,66 +1,117 @@
-<div class="modal fade" id="addMemory" tabindex="-1" role="dialog" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addMemoryModalLabel">Add Memory</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">x</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <%= render "playlists/memory_form" %>
+<!DOCTYPE html>
+<html>
+  <head>
+
+  </head>
+
+  <body>
+    <div class="modal fade" id="addMemory" tabindex="-1" role="dialog" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addMemoryModalLabel">Add Memory</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= render "playlists/memory_form" %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="modal fade" id="defineMoment" tabindex="-1" role="dialog" aria-labelledby="defineMomentModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="defineMomentModalLabel">Define Moment</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">x</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <%= render "playlists/moment_form" %>
+    <div class="modal fade" id="defineMoment" tabindex="-1" role="dialog" aria-labelledby="defineMomentModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="defineMomentModalLabel">Define Moment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= render "playlists/moment_form" %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div id="timeline-nav">
-  <h1> <%= @user.display_name %>'s timeline</h1>
-  <div id="main-controls">
-    <%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %>
-    <%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#defineMoment'} %>
-  </div>
-
-  <div id="filter-controls">
-    <input id="hide-playlists" type="button" value="Hide Playlists" class="btn btn-primary"/>
-  </div>
-</div>
-
-<div id="timeline-container">
-  <% @timeline.reverse.each do |p| %>
-    <% if p.class == RSpotify::Playlist %>
-      <div id='timeline-item' class='playlist-dob'>
-        <ul>
-          <li><%= link_to image_tag(p.images[0]['url'], id: p.name.to_s, class: "playlist-cover", title: p.tracks_added_at[p.tracks_added_at.keys[0]], height:"80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => p.name, :user => @user.to_hash, :offset => 0}, class: "timeline-item" %></li>
-          <li><h1 class="playlist-id label label-default"><%= p.name %></h1></li>
-        </ul>
+    <div class="modal fade" id="shareTimeline" tabindex="-1" role="dialog" aria-labelledby="shareTimelineModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="shareTimelineLabel">Share Timeline</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= render "playlists/share_timeline_form" %>
+          </div>
+        </div>
       </div>
-    <% else %>
-      <div id='timeline-item' class='track-item'>
-        <ul>
-          <li><%= link_to image_tag(p[1].album.images[0]['url'], class: "track-cover", title: p[0].title.to_s, height: "80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => p[0].playlist_name, :user => @user.to_hash, :offset => 0}, id:p[0].title, class: "timeline-item" %></li>
-          <% if !p[2].eql? nil %>
-            <li><h1 class="moment-id label label-default"><%= p[2].name %></h1></li>
+    </div>
+
+    <div id="timeline-nav">
+      <h1> <%= @user.display_name %>'s timeline</h1>
+      <div id="main-controls">
+        <p class="nav-item"><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %></p>
+        <p class="nav-item"><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#defineMoment'} %></p>
+        <p class="nav-item"><%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#shareTimeline'} %></p>
+      </div>
+
+      <div id="filter-controls">
+        <input id="hide-playlists" type="button" value="Hide Playlists" class="btn btn-primary"/>
+      </div>
+    </div>
+
+    <div id="timeline-container">
+      <% (1..12).each do |i| %>
+        <% unless @tlhash[i] == nil %>
+          <% @tlhash[i].each do |item| %>
+            <% if item.class == RSpotify::Playlist %>
+              <div id='timeline-item' class='playlist-dob'>
+                <ul>
+                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%", "data-toggle" => "popover", "data-content" => "playlist created on " + item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s, "data-trigger" => "hover", "data-placement" => "bottom"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name, :user => @user.to_hash, :offset => 0}, class: "timeline-item" %></li>
+                </ul>
+              </div>
+            <% elsif item.class == Hash %>
+              <div id='timeline-item' class='playlist-dob'>
+                <ul>
+                  <li>moment uwu</li>
+                </ul>
+              </div>
+            <% else %>
+              <div id='timeline-item' class='track-item'>
+                <ul>
+                  <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "bottom"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
+                  <% if !item[2].eql? nil %>
+                    <li><h1 class="moment-id label label-default"><%= item[2].name %></h1></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
           <% end %>
-        </ul>
+        <% end %>
+      <% end %>
+
+      <div id="month-bar">
+        <% (1..12).each do |i| %>
+          <% if @months[i] != nil && @months_colors[i] != nil%>
+            <p id="month-bar-item" style="width: <%= @months[i].to_i * 25.5 %>%; background-color:<%= @months_colors[i] %>"><%= Date::MONTHNAMES[i] %></p>
+          <% end %>
+        <% end %>
       </div>
-    <% end %>
-  <% end %>
-  <hr id="timeline-bar"/>
-</div>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+      /*$(function() {
+        $(window).scroll(function () {
+            console.log($(this).scrollLeft())
+          });
+      });*/
+    </script>
+
+  </body>
+</html>
