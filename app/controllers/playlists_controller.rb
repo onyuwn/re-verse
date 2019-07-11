@@ -18,15 +18,9 @@ class PlaylistsController < ApplicationController
 
     @months = {}
 
-    # #TODO: make date picker
-    # count = 1
-    # @tracks.each do |t|
-    #   t.memory_date = Date.new(2019, rand(1..12), rand(1..25))
-    #   count += 1
-    #   t.save
-    # end
     @tracks_array = @tracks.to_a #tracks (memories)
     @tlhash = {} # {month-int => [track, playlist, track..]} each array is sorted by date later..
+    @momenthash = {}
     @playlists.each do |p|
       if @tlhash[p.tracks_added_at[p.tracks_added_at.keys[0]].month] == nil
         @tlhash[p.tracks_added_at[p.tracks_added_at.keys[0]].month] = []
@@ -47,73 +41,42 @@ class PlaylistsController < ApplicationController
             end
           end
 
-          @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
-          matched_playlist.tracks_cache.each do |pt| #match track name to rspotify track object
+          matched_playlist.tracks.each do |pt| #match track name to rspotify track object
             if pt.name.eql? t.title
               new_track << pt #add track object in along with memory
             end
           end
-
+          moment_item = false
           @moments.each do |m|
             if t.memory_date <= m.end_date and t.memory_date >= m.start_date
               new_track << m
+              moment_item = true
             end
           end
-          @tlhash[t.memory_date.month] << new_track
+
+          if moment_item == true
+            if @momenthash[new_track[2].start_date.month] == nil
+              @momenthash[new_track[2].start_date.month] = []
+              @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
+            end
+            @momenthash[new_track[2].start_date.month] << new_track
+          else
+            @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
+            @tlhash[t.memory_date.month] << new_track
+          end
           @tracks_array.delete_at(i)
         end
       end
       @tlhash[p.tracks_added_at[p.tracks_added_at.keys[0]].month] << p
     end
-    #
-    # @month_color_scheme = {}
-    # #get a color scheme for each month in the tlhash..
-    # image = Magick::ImageList.new
-    # @tlhash.keys.each do |k|
-    #   pixels = [] #pixels to be dumped into colormind
-    #   @tlhash[k].each do |t|
-    #     if t.class != RSpotify::Playlist
-    #       urlimage = open(t[1].album.images[0]['url'])
-    #       image.from_blob(urlimage.read)
-    #       count = 0
-    #       image.each_pixel do |pixel, c, r|
-    #         begin
-    #           pixels << [pixel.to_color[1..2].to_i(16), pixel.to_color[3..4].to_i(16), pixel.to_color[5..6].to_i(16)]
-    #           count = count + 1
-    #           if count > 100
-    #             break
-    #           end
-    #         rescue ArgumentError => e
-    #           Rails.logger.info "oopsies!"
-    #           break
-    #         end
-    #       end
-    #     end
-    #   end
-    #
-    #   data = {
-    #     :model => "default",
-    #     :input => pixels
-    #   }
-    #
-    #   url = URI.parse('http://colormind.io/api/')
-    #   req = Net::HTTP::Get.new(url.to_s, {'Content-Type': 'text/json'})
-    #   req.body = data.to_json
-    #   res = Net::HTTP.start(url.host, url.port) {|http|
-    #     http.request(req)
-    #   }
-    #   color_results = JSON.parse(res.body)['result'] #2d array of 5 rgb values [[r,g,b], [], ...]
-    #   @month_color_scheme[k] = color_results
-    # end
-    #
-    # Rails.logger.info @month_color_scheme.inspect
 
     #iterate over each entry in tl hash and sort array by date
-    @moments = {}
+
     @tlhash.each do |k, v| # v - array
       moment_index = 0
       items_sorted = []
       datehash = {}
+      month_moment = @momenthash[k]
       v.each do |i|
         if i.class == RSpotify::Playlist
           playlistday = i.tracks_added_at.values[0].to_date.day
@@ -122,39 +85,25 @@ class PlaylistsController < ApplicationController
           end
           datehash[playlistday] << i
         else #memory/moment-item
-          if i[i.length - 1].class == Moment #the last element of each item array is the moment tag
-            if datehash[i[i.length - 1].created_at.day] == nil
-              datehash[i[i.length - 1].created_at.day] = []
-              datehash[i[i.length - 1].created_at.day] << {i[i.length - 1].name.to_s => [i]}
-            elsif datehash[i[i.length - 1].created_at.day] != nil
-              datehash.each do |dk, dv|
-                if datehash[dk].class == Hash
-                  datehash[i[i.length - 1].created_at.day][moment_index][i[i.length - 1].name.to_s] << i
-                end
-              end
-            end
-          else
-            if datehash[i[0].memory_date.day] == nil
-              datehash[i[0].memory_date.day] = []
-            end
-            datehash[i[0].memory_date.day] << i
+          itemday = i[0].memory_date.day
+          if datehash[itemday] == nil
+            datehash[itemday] = []
           end
+          datehash[itemday] << i
         end
       end
 
       (1..datehash.keys.max).each do |day| #iterate over every day in month
-        if datehash[day] && datehash[day].any? && datehash[day].class == Array
+        if datehash[day] != nil
           datehash[day].reverse.each do |j| #iterate over items from that day (usually one, but someone could have multiple things on the same day)
             items_sorted << j #if item in that day plop it in
           end
-        elsif datehash[day].class == Hash
-          items_sorted << datehash[day]
         end
       end
-      @tlhash[k] = items_sorted
+      @tlhash[k] = [items_sorted, month_moment]
     end
 
-    @months_colors = {1 => "blue", 2 => "red", 3 => "orange", 4 => "yellow", 5 => "green", 6 => "blue", 7 => "purple", 8 => "red", 9 => "orange", 10 => "yellow", 11 => "green", 12 => "blue"}
+    @months_colors = {1 => "#5f7ed4", 2 => "#d45f80", 3 => "#5fd488", 4 => "#5fced4", 5 => "#d4d25f", 6 => "#d4945f", 7 => "#b15fd4", 8 => "#d4765f", 9 => "#5fd4ad", 10 => "#d49d5f", 11 => "#735fd4", 12 => "#e5f2a0"}
 
     @playlists_h = {}
     @playlists.each do |p|

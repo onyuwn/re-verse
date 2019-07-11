@@ -54,7 +54,16 @@
     </div>
 
     <div id="timeline-nav">
-      <h1> <%= @user.display_name %>'s timeline</h1>
+      <% if params[:focused_moment] != nil %>
+        <p class="back"><%=link_to 'back', {:controller => 'playlists', :action => 'index'}, {class: "btn btn-primary"}%></p>
+        <% (1..12).each do |i| %>
+          <% if @tlhash[i] != nil && @tlhash[i][1] != nil %>
+            <h1> <%= @tlhash[i][1][0][2].name %> in focus</h1>
+          <% end %>
+        <% end %>
+      <% else %>
+        <h1> <%= @user.display_name %>'s timeline</h1>
+      <% end %>
       <div id="main-controls">
         <p class="nav-item"><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %></p>
         <p class="nav-item"><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#defineMoment'} %></p>
@@ -67,19 +76,29 @@
     </div>
 
     <div id="timeline-container">
+
+      <div id="month-bar">
+        <% (1..12).each do |i| %>
+          <% if @months[i] != nil && @months_colors[i] != nil%>
+            <p class="month-bar-item" style="width: <%= (@months[i].to_i * 25.5) - (i/4) %>%; background-color:<%= @months_colors[i] %>"><span id="month-bar-label"><%= Date::MONTHNAMES[i] %></span></p>
+          <% end %>
+        <% end %>
+      </div>
+
       <% (1..12).each do |i| %>
-        <% unless @tlhash[i] == nil %>
-          <% @tlhash[i].each do |item| %>
+        <% if @tlhash[i] != nil && params[:focused_moment] == nil%>
+          <% if @tlhash[i][1] != nil %>
+            <div id='timeline-item' class='playlist-dob'>
+              <ul>
+                <li><%= link_to @tlhash[i][1][0][2].name.to_s, {:controller => "playlists", :action => "index", :focused_moment => @tlhash[i][1][0][2].name.to_s} %></li>
+              </ul>
+            </div>
+          <% end %>
+          <% @tlhash[i][0].each do |item| %>
             <% if item.class == RSpotify::Playlist %>
               <div id='timeline-item' class='playlist-dob'>
                 <ul>
                   <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%", "data-toggle" => "popover", "data-content" => "playlist created on " + item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s, "data-trigger" => "hover", "data-placement" => "bottom"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name, :user => @user.to_hash, :offset => 0}, class: "timeline-item" %></li>
-                </ul>
-              </div>
-            <% elsif item.class == Hash %>
-              <div id='timeline-item' class='playlist-dob'>
-                <ul>
-                  <li>moment uwu</li>
                 </ul>
               </div>
             <% else %>
@@ -93,25 +112,31 @@
               </div>
             <% end %>
           <% end %>
+        <% elsif params[:focused_moment] != nil %>
+          <% if @tlhash[i] != nil && @tlhash[i][1] != nil %>
+            <% if @tlhash[i][1][0][2].name == params[:focused_moment] %>
+              <% @tlhash[i][1].each do |item| %>
+                <div id='timeline-item' class='track-item'>
+                  <ul>
+                    <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "bottom"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
+                  </ul>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
 
-      <div id="month-bar">
-        <% (1..12).each do |i| %>
-          <% if @months[i] != nil && @months_colors[i] != nil%>
-            <p id="month-bar-item" style="width: <%= @months[i].to_i * 25.5 %>%; background-color:<%= @months_colors[i] %>"><%= Date::MONTHNAMES[i] %></p>
+      <div id='timeline-item' class='memory-append'>
+        <ul>
+          <% if params[:focused_moment] == nil %>
+          <li><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %></li>
+          <% else %>
+          <!-- TODO pass in date that is in the moment -->
+          <li><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %></li>
           <% end %>
-        <% end %>
+        </ul>
       </div>
     </div>
-
-    <script language="javascript" type="text/javascript">
-      /*$(function() {
-        $(window).scroll(function () {
-            console.log($(this).scrollLeft())
-          });
-      });*/
-    </script>
-
   </body>
 </html>

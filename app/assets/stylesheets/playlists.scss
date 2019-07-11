@@ -12,6 +12,7 @@
   width: 25%;
   padding-left: 2%;
   padding-right: 2%;
+  padding-bottom: 5%;
   text-align: center;
 }
 
@@ -34,8 +35,9 @@
 #timeline-container img{
   display: block;
   margin:auto;
-  box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 5px 5px 5px #212121;
   transition: box-shadow 0.1s ease-in-out;
+  transition: transform 0.25s ease-out;
 }
 
 #timeline-container{
@@ -89,7 +91,8 @@ hr {
 }
 
 #timeline-container img:hover {
-  box-shadow: 10px 10px 5px #ccc;
+  transform: translate(0, 50px);
+  box-shadow: 10px 10px 5px #212121;
 }
 
 #timeline-nav {
@@ -99,6 +102,7 @@ hr {
   position:fixed;
   width: 100%;
   padding: 2%;
+  border-bottom: 5px solid #3b3a3a;
   //margin: 0 auto;
 }
 
@@ -113,12 +117,13 @@ hr {
 }
 
 body {
-  background-color:black;
-  font-family: 'Poppins', sans-serif;
+  background:#3b3a3a !important;
+  //font-family: 'Poppins', sans-serif;
 }
 
 #timeline-container {
-  padding-top: 15%;
+  overflow-x: auto;
+  padding-top: 13.8%;
 }
 
 #playlist-header {
@@ -196,15 +201,19 @@ a, a:hover, a:focus {
   height: 30%;
   transition: height 2s;
 }
-//
-// #month-bar {
-//   display:block;
-//   position: absolute;
-//   top: 50%;
-//   z-index: -1;
-// }
 
-#month-bar-item {
+#month-bar {
+  //   display:block;
+  //   position: absolute;
+  //   top: 50%;
+  //   z-index: -1;
+}
+
+.month-bar-item {
   display:inline-block;
   text-align:center;
+}
+
+#month-bar-label {
+  background:white !important;
 }
