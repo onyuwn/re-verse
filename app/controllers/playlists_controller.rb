@@ -1,6 +1,5 @@
 require 'json'
 require 'time'
-require 'rmagick'
 require 'net/http'
 require 'open-uri'
 require 'json'
