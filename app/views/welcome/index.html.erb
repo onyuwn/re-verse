@@ -1,2 +1,74 @@
-<h1>Welcome</h1>
-<%= link_to 'Log in with spotify', '/auth/spotify' %>
+
+<!-- This is the Header -->
+<header>
+  <h1 style="color:white;" > R E - V E R S E </h1>
+
+  <!-- Add icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <a href="#" class="fa fa-instagram"></a>
+  <a href="#" class="fa fa-twitter"></a>
+  <a href="#" class="fa fa-facebook"></a>
+</header>
+
+<!-- This is the center Block Code -->
+<div class="container">
+  <h5 class="text-container" style="color:white;">
+   To create your music timeline <br></br>and explore your friends' timelines:
+  </h5>
+    <div class="link-container">
+      <%= link_to 'Log in with Spotify', '/auth/spotify', {"class" => "btn btn-success"} %>
+    </div>
+</div>
+<!-- This is the code for the line -->
+<div>
+  <hr class= "line" style="border: 2px solid black;" />
+</div>
+
+<!-- This is the Footer -->
+<div class="footer">
+
+</div>
+
+<!-- This is the carousel code -->
+<div id="my-slider" class="carousel slide" data-ride="carousel">
+<!--  <ol class="carousel-indicators">
+    <li data-target="#my-slider" data-slide-to="0" class="active"></li>
+    <li data-target="#my-slider" data-slide-to="1"></li>
+    <li data-target="#my-slider" data-slide-to="2"></li>
+  </ol>
+-->
+  <div class="carousel-inner" role="listbox">
+
+<div class="item active">
+    <div class="album_cover1">
+      <img class="resize1" src="https://upload.wikimedia.org/wikipedia/en/5/51/Igor_-_Tyler%2C_the_Creator.jpg" />
+    </div>
+
+    <div class="album_cover2">
+      <img class ="resize2" src="https://payload.cargocollective.com/1/4/158872/9666476/Tame-Impala-Currents-final-packshot-1200px_1200.jpg" />
+    </div>
+</div>
+
+<div class="item">
+    <div class="album_cover1">
+      <img class ="resize1" src="https://upload.wikimedia.org/wikipedia/en/5/5e/Brockhampton_-_Iridescence.png" />
+    </div>
+
+    <div class="album_cover2">
+      <img class="resize2" src="https://upload.wikimedia.org/wikipedia/en/1/10/Childish_Gambino_-_Awaken%2C_My_Love%21.png" />
+    </div>
+</div>
+
+<div class="item">
+    <div class="album_cover1">
+      <img class="resize1" src="https://m.media-amazon.com/images/I/71Ynssr68oL._SS500_.jpg" />
+    </div>
+
+    <div class="album_cover2">
+      <img class="resize2" src="https://www.titantimes.org/wp-content/uploads/2017/11/imageedit_2_2844150673-900x900.jpg" />
+    </div>
+</div>
+
+
+  </div>
+</div>
