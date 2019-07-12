@@ -10,16 +10,20 @@ $(document).ready(function () {
     $('#hide-playlists').on('click', function() {
       if($('.playlist-dob').is(":hidden"))
       {
-        console.log("fjdksl");
         $('.playlist-dob').show(1000);
         $('.playlist-id').show(1000);
+        $('.month-bar-item').show(1000);
         $('#hide-playlists').attr('value', "Hide Playlists");
       }
       else
       {
         $('.playlist-dob').hide(1000);
         $('.playlist-id').hide(1000);
+        $('.month-bar-item').hide(1000);
         $('#hide-playlists').attr('value', "Show Playlists");
       }
     });
+
+    $('.playlist-cover').popover({delay:{show: "300", hide: "50"}})
+    $('.track-cover').popover({delay:{show: "300", hide: "50"}})
 });

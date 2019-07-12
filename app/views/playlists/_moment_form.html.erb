@@ -22,6 +22,10 @@
   </p>
 
   <p>
+    <%= form.hidden_field :timeline_id, :value => @current_timeline[0].id %>
+  </p>
+
+  <p>
     <%= form.submit %>
   </p>
 <% end %>

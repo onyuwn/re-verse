@@ -1,0 +1,29 @@
+<div id="feed-header">
+  <h1> Friend Activity</h1>
+  <div id="main-controls">
+    <%= link_to "my timeline", {:controller => "playlists", :action => "index"}, class: "btn btn-primary" %>
+  </div>
+
+  <div id="filter-controls">
+    <input id="hide-playlists" type="button" value="Hide Playlists" class="btn btn-primary"/>
+  </div>
+</div>
+
+<div id="feed">
+  <% @sharedtls.each do |s| %>
+    <div id="feed-item">
+      <h4><%= s.name %></h4>
+      <p><%= s.creator %></p>
+      <p><%= s.moment.count %></p>
+    </div>
+  <% end %>
+
+  <% @memory_posts.each do |s| %>
+    <div id="feed-item">
+      <h3><%= s.username %> updated a memory:</h3>
+      <p><%= s.title %></p>
+      <p><%= s.memory %></p>
+    </div>
+  <% end %>
+
+</div>

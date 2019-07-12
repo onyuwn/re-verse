@@ -1,0 +1,27 @@
+// Place all the styles related to the Friends controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#feed-header a {
+  display: inline-block;
+  background-color: #474747;
+  padding: 10px;
+}
+
+#feed-header {
+  text-align:center;
+  background-color:#262626;
+  color:white;
+  //position:fixed;
+  width: 100%;
+  padding: 2%;
+  margin: 0 auto;
+}
+
+#feed {
+
+}
+
+#feed-item {
+  background-color:#e6e6e6;
+  box-shadow: 10px 10px 5px #ccc;
+}

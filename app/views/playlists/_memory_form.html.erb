@@ -40,6 +40,10 @@
   </p>
 
   <p>
+    <%= form.hidden_field :timeline_id, :value => @current_timeline[0].id %>
+  </p>
+
+  <p>
     <%= form.submit "Save Memory", {:class => "btn btn-primary"}%>
   </p>
 <% end %>

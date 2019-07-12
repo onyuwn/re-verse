@@ -1,0 +1,20 @@
+<%= form_with scope: :timeline, url: playlists_index_path, local: true do |form| %>
+  <h3><%= @current_timeline[0].name %>'s Timeline</h3>
+
+  <p>
+    <p>Friend Username:</p><br>
+    <%= form.text_field :subscribers %>
+  </p>
+
+  <p>
+    <%= form.hidden_field :creator, :value => session[:user]['display_name'] %>
+  </p>
+
+  <p>
+    <%= form.hidden_field :name, :value => session['user']['display_name'] %><br>
+  </p>
+
+  <p>
+    <%= form.submit "share", {:class => "btn btn-primary"}%>
+  </p>
+<% end %>
