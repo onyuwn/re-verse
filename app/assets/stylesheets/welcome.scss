@@ -5,6 +5,7 @@
 
 header {
     background-color: #000000;
+    z-index: 99;
 }
 
 a{
@@ -15,31 +16,34 @@ a{
 header h1 {
     margin: 0;
     padding: 10px;
-}
+  }
 
 html, body {
     margin: 0;
     padding: 0;
+    overflow: auto;
 }
 
 h1 {
   text-align: center;
+  z-index: 99;
 }
 
 .container {
-  width: 200px;
-  line-height: 300px;
+  width: 20%;
+  height: 100%;
   display: block;
   text-align: center;
-  overflow: hidden;
+  //overflow: hidden;
   z-index: 0;
 }
 
 .link-container {
   border-radius: 25px;
   background-color: #000000;
-  width: 300px;
-  height: 300px;
+  width: 22.5%;
+  padding-bottom: 22.5%;
+  //height: 42.5vh;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -47,10 +51,18 @@ h1 {
   z-index: 1;
 }
 
+
+.btn-success {
+  top: 45%;
+  left: 25%;
+  position: absolute;
+}
+
 .text-container {
+  font-size: 1vw;
   position: absolute;
   left: 50%;
-  top: 36%;
+  top: 35%;
   transform: translate(-50%, -50%);
   z-index: 2;
 }
@@ -58,38 +70,33 @@ h1 {
 .album_cover1 {
   border-radius: 25px;
   background-color: #000000;
-  width: 250px;
-  height: 250px;
+  width: 18vw;
+  padding-bottom: 18%;
+  //height: 33.5vh;
   position: relative;
-  left: 175px;
-  top: 160px;
+  left: 12.5%;
+  bottom: initial;
+  top: 50%;
+  transform: translateY(75%);
   z-index: -1;
 }
 
 .album_cover2 {
   border-radius: 25px;
   background-color: #000000;
-  width: 250px;
-  height: 250px;
+  width: 18vw;
+  padding-bottom: 18%;
   position: relative;
-  left: 855px;
-  bottom: 90px;
+  left: 70%;
+  bottom: initial;
+  top: 50%;
+  transform: translateY(-25%);
   z-index: -1;
 }
 
 img.resize1 {
-  width:200px;
-  height:200px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: none;
-}
-
-img.resize2 {
-  width:200px;
-  height:200px;
+  width:80%;
+  height:80%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -106,14 +113,30 @@ img.resize2 {
 
 .footer {
   width: 100%;
-  height: 50px;
+  height: 5%;
   background: #000000;
   bottom: 0;
   position: absolute;
 }
 
 .carousel {
+  position: absolute;
   z-index: -99;
+  width: 100%;
+  height: 100%;
+  top:50%;
+}
+
+.item {
+  position: absolute;
+  height: 0%;
+  top: 50%;
+  align-items: center;
+  display: flex;
+}
+
+.carousel_container {
+  display:block;
 }
 
 .fa {
