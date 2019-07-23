@@ -1,28 +1,28 @@
-<div id="feed-header">
-  <h1> Friend Activity</h1>
-  <div id="main-controls">
-    <%= link_to "my timeline", {:controller => "playlists", :action => "index"}, class: "btn btn-primary" %>
-  </div>
-
-  <div id="filter-controls">
-    <input id="hide-playlists" type="button" value="Hide Playlists" class="btn btn-primary"/>
-  </div>
-</div>
+<nav class="navbar navbar-dark shadow">
+  <a href="/friends/index" class="navbar-brand mb-0 h1">Friend Activity</a>
+  <ul class="nav nav-pills">
+    <li class="nav-item"><%= link_to "my timeline", {:controller => "playlists", :action => "index"}, class: "nav-link" %></li>
+  </ul>
+</nav>
 
 <div id="feed">
   <% @sharedtls.each do |s| %>
-    <div id="feed-item">
-      <h4><%= s.name %></h4>
-      <p><%= s.creator %></p>
-      <p><%= s.moment.count %></p>
+    <div id="feed-item" class="rounded">
+      <div id="item-content">
+        <h4 id="item-header"><%= s.name %></h4>
+        <p><%= s.creator %></p>
+        <p><%= s.moment.count %></p>
+      </div>
     </div>
   <% end %>
 
   <% @memory_posts.each do |s| %>
-    <div id="feed-item">
-      <h3><%= s.username %> updated a memory:</h3>
-      <p><%= s.title %></p>
-      <p><%= s.memory %></p>
+    <div id="feed-item" class="rounded">
+      <div id="item-content">
+        <h4 id="item-header"><%= s.username %> updated a memory:</h4>
+        <p><%= s.title %></p>
+        <p><%= s.memory %></p>
+      </div>
     </div>
   <% end %>
 

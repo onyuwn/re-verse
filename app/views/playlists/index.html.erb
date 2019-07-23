@@ -53,34 +53,32 @@
       </div>
     </div>
 
-    <div id="timeline-nav">
+    <nav class="navbar navbar-dark shadow">
       <% if params[:focused_moment] != nil %>
-        <p class="back"><%=link_to 'back', {:controller => 'playlists', :action => 'index'}, {class: "btn btn-primary"}%></p>
         <% (1..12).each do |i| %>
           <% if @tlhash[i] != nil && @tlhash[i][1] != nil %>
-            <h1> <%= @tlhash[i][1][0][2].name %> in focus</h1>
+            <a href="/playlists/index" class="navbar-brand mb-0 h1"> <%= @tlhash[i][1][0][2].name %> in focus</a>
           <% end %>
         <% end %>
       <% else %>
-        <h1> <%= @user.display_name %>'s timeline</h1>
+        <a href="/friends/index" class="navbar-brand mb-0 h1"> <%= @user.display_name %>'s timeline</a>
       <% end %>
-      <div id="main-controls">
-        <p class="nav-item"><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %></p>
-        <p class="nav-item"><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#defineMoment'} %></p>
-        <p class="nav-item"><%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#shareTimeline'} %></p>
-      </div>
-
-      <div id="filter-controls">
-        <input id="hide-playlists" type="button" value="Hide Playlists" class="btn btn-primary"/>
-      </div>
-    </div>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#addMemory'} %></li>
+        <li class="nav-item"><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#defineMoment'} %></li>
+        <li class="nav-item"><%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#shareTimeline'} %></li>
+        <div id="filter-controls">
+            <li class="nav-item"><input id="hide-playlists" type="button" value="Hide Playlists" class="btn btn-primary"/></li>
+        </div>
+      </ul>
+    </nav>
 
     <div id="timeline-container">
 
       <div id="month-bar">
         <% (1..12).each do |i| %>
           <% if @months[i] != nil && @months_colors[i] != nil%>
-            <p class="month-bar-item" style="width: <%= (@months[i].to_i * 25.5) - (i/4) %>%; background-color:<%= @months_colors[i] %>"><span id="month-bar-label"><%= Date::MONTHNAMES[i] %></span></p>
+            <p class="month-bar-item" style="width: <%= (@months[i].to_i * 25.5) - (i/4) %>%; background-color:<%= @months_colors[i] %>"><span class="badge badge-pill badge-light"><%= Date::MONTHNAMES[i] %></span></p>
           <% end %>
         <% end %>
       </div>
@@ -98,13 +96,13 @@
             <% if item.class == RSpotify::Playlist %>
               <div id='timeline-item' class='playlist-dob'>
                 <ul>
-                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%", "data-toggle" => "popover", "data-content" => "playlist created on " + item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s, "data-trigger" => "hover", "data-placement" => "bottom"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name, :user => @user.to_hash, :offset => 0}, class: "timeline-item" %></li>
+                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%", "data-toggle" => "popover", "data-content" => "playlist created on " + item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s, "data-trigger" => "hover", "data-placement" => "top"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name, :user => @user.to_hash, :offset => 0}, class: "timeline-item" %></li>
                 </ul>
               </div>
             <% else %>
               <div id='timeline-item' class='track-item'>
                 <ul>
-                  <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "bottom"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
+                  <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "top"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
                   <% if !item[2].eql? nil %>
                     <li><h1 class="moment-id label label-default"><%= item[2].name %></h1></li>
                   <% end %>
@@ -118,7 +116,7 @@
               <% @tlhash[i][1].each do |item| %>
                 <div id='timeline-item' class='track-item'>
                   <ul>
-                    <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "bottom"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
+                    <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "top"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
                   </ul>
                 </div>
               <% end %>

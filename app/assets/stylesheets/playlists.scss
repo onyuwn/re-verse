@@ -1,24 +1,18 @@
 // Place all the styles related to the Playlists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#timeline-bar {
-  height:20px;
-  background-color: black;
-  vertical-align: middle;
-}
-
 #timeline-item {
   display: inline-block;
   width: 25%;
   padding-left: 2%;
   padding-right: 2%;
   padding-bottom: 5%;
+  margin-top:6%;
   text-align: center;
 }
 
-#timeline-item:hover > ul li h1 {
-  visibility: visible;
-  opacity: 1;
+ul {
+  padding-top:2%;
 }
 
 #timeline-item ul {
@@ -69,6 +63,7 @@
 
 #filter-controls {
   display:inline;
+  padding-right: 2%;
   float:right;
 }
 
@@ -110,6 +105,10 @@ hr {
   display:inline;
 }
 
+.navbar-dark {
+  background-color: #171717;
+}
+
 #timeline-nav a {
   display: inline-block;
   background-color: #474747;
@@ -117,13 +116,12 @@ hr {
 }
 
 body {
-  background:#3b3a3a !important;
+  background:#575656 !important;
   //font-family: 'Poppins', sans-serif;
 }
 
 #timeline-container {
   overflow-x: auto;
-  padding-top: 13.8%;
 }
 
 #playlist-header {
