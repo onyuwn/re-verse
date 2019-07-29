@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'players/play'
   get 'players/web_player'
   get 'users/dashboard'
+  get 'friends/unsubscribe'
 
   post 'playlists/timeline'
   post 'playlists/edit'

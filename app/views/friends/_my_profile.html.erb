@@ -1,0 +1,17 @@
+<h3>Subscribers</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @subscribers.each do |s| %>
+      <tr>
+        <td><%= s %></td>
+        <td><%= link_to "timeline", {:controller => "friends", :action => "unsubscribe", :user => s} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

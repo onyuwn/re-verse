@@ -96,16 +96,20 @@
             <% if item.class == RSpotify::Playlist %>
               <div id='timeline-item' class='playlist-dob'>
                 <ul>
-                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%", "data-toggle" => "popover", "data-content" => "playlist created on " + item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s, "data-trigger" => "hover", "data-placement" => "top"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name, :user => @user.to_hash, :offset => 0}, class: "timeline-item" %></li>
+                  <li><span class="badge badge-pill badge-dark"><%= item.name %></span></li>
+                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name}, class: "timeline-item" %></li>
+                  <li><span class="badge badge-pill badge-dark">Playlist created on <%=item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s%></span></li>
                 </ul>
               </div>
             <% else %>
               <div id='timeline-item' class='track-item'>
                 <ul>
-                  <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "top"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
+                  <li><span class="badge badge-pill badge-dark"><%= item[0].title %></span></li>
+                  <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
                   <% if !item[2].eql? nil %>
                     <li><h1 class="moment-id label label-default"><%= item[2].name %></h1></li>
                   <% end %>
+                  <li><span class="badge badge-pill badge-dark">Memory from <%= item[0].memory_date.to_s %></span></li>
                 </ul>
               </div>
             <% end %>
