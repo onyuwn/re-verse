@@ -1,78 +1,43 @@
 <!DOCTYPE html>
-<html>
+<body>
 
-  <head>
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-    <%= yield :meta %>
-  </head>
+  <div style="position: fixed; z-index: -99; width: 100%; height: 100%" >
+    <iframe frameborder="0" height="100%" width="100%"
+      src="https://www.youtube.com/embed/OWa5rzEOumQ?autoplay=1&showinfo=0&controls=0&mute=1&loop=1&playlist=OWa5rzEOumQ&?modestbranding=1&end=660" allowfullscreen>
 
-  <body>
-    <!-- This is the Header -->
-    <header>
-      <h1 style="color:white;" > R E - V E R S E </h1>
+    </iframe>
+  </div>
 
-      <!-- Add icon library -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <a href="#" class="fa fa-instagram"></a>
-      <a href="#" class="fa fa-twitter"></a>
-      <a href="#" class="fa fa-facebook"></a>
-    </header>
+<div class="header">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <a href="#" class="fa fa-instagram"></a>
+  <a href="#" class="fa fa-facebook"></a>
+  <a href="https://twitter.com/Re_verseApp" class="fa fa-twitter"></a>
 
-    <!-- This is the center Block Code -->
-    <div class="container">
-      <h5 class="text-container" style="color:white;">
-       To create your music timeline <br></br>and explore your friends' timelines:
-      </h5>
-        <div class="link-container">
-          <%= link_to 'Log in with Spotify', '/auth/spotify', {"class" => "btn btn-success"} %>
-        </div>
-    </div>
-    <!-- This is the code for the line -->
-    <div>
-      <hr class= "line" style="border: 2px solid black;" />
-    </div>
-
-    <!-- This is the Footer -->
-    <div class="footer">
-
-    </div>
-
-    <!-- This is the carousel code -->
-    <div class="carousel_container">
-      <div id="my-slider" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-          <div class="item active">
-              <div class="album_cover1">
-                <img class="resize1" src="https://upload.wikimedia.org/wikipedia/en/5/51/Igor_-_Tyler%2C_the_Creator.jpg" />
-              </div>
-
-              <div class="album_cover2">
-                <img class ="resize1" src="https://payload.cargocollective.com/1/4/158872/9666476/Tame-Impala-Currents-final-packshot-1200px_1200.jpg" />
-              </div>
-          </div>
-
-          <div class="item">
-              <div class="album_cover1">
-                <img class ="resize1" src="https://upload.wikimedia.org/wikipedia/en/5/5e/Brockhampton_-_Iridescence.png" />
-              </div>
-
-              <div class="album_cover2">
-                <img class="resize1" src="https://upload.wikimedia.org/wikipedia/en/1/10/Childish_Gambino_-_Awaken%2C_My_Love%21.png" />
-              </div>
-          </div>
-
-          <div class="item">
-              <div class="album_cover1">
-                <img class="resize1" src="https://m.media-amazon.com/images/I/71Ynssr68oL._SS500_.jpg" />
-              </div>
-
-              <div class="album_cover2">
-                <img class="resize1" src="https://www.titantimes.org/wp-content/uploads/2017/11/imageedit_2_2844150673-900x900.jpg" />
-              </div>
-          </div>
-        </div>
+  <div class="inner-header">
+      <div class="logo-container">
+        <h1> R E - V E R S E </h1>
       </div>
-    </div>
-  </body>
+  </div>
+</div>
 
-</html>
+<div class="main-container">
+  <div class="jumbotron">
+    <h2 class="display-4">Welcome to R E - V E R S E!</h2>
+  <p class="lead">RE-VERSE is a simple webapp designed to allow you to create and share a personalized timeline of your music and memories. To continue, login below!</p>
+  <p class="lead">
+    <%= link_to 'Log in with Spotify', '/auth/spotify', {"class" => "btn btn-success"} %>
+  </p>
+  </div>
+</div>
+
+<!-- <div class="text" style="font-size:13px;"> Relive your music and share <br></br> your memories with your friends. </div> -->
+
+<div class="footer">
+
+
+</div>
+
+
+
+</body>
