@@ -86,13 +86,11 @@ ul {
   display:inline;
 }
 
-hr {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color:#666;
-  position: fixed;
-  z-index: -1;
+#timeline-item-bar {
+  display: inline-block;
+  width: 10%;
+  height:200%;
+  text-align: center;
 }
 
 #timeline-container img:hover {
@@ -149,16 +147,27 @@ body {
   background-color: #1e5f99;
 }
 
-#current-track {
+#current-memory {
   text-align:center;
   justify-content: center;
   align-items: center;
   display:block;
+  background-color: #e6e6e6;
+  padding:2%;
+  margin-left:35%;
+  margin-right:35%;
+  border-radius: 1%;
+}
+
+#track-art-container {
+  height:100%;
+  width:100%;
+  box-shadow: 2px 3px 3px #212121;
 }
 
 .track-art {
-  height:30%;
-  width: 30%;
+  height:100%;
+  width: 100%;
 }
 
 .previous-track-art {

@@ -9,6 +9,10 @@ class PlaylistsController < ApplicationController
   protect_from_forgery except: :add_memory
 
   def index
+    if params[:new_item] != nil
+      @focused_memory = params[:new_item].to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+    end
+
     @user = RSpotify::User.new(session[:user])
     @current_timeline = Timeline.where(:creator => @user.display_name)
     @playlists =  @user.playlists
@@ -118,7 +122,6 @@ class PlaylistsController < ApplicationController
         if params[:moment].eql? nil
           params.require(:timeline).permit!
           current_subs = Timeline.where(:creator => @user.display_name)[0].subscribers.to_s
-
           Timeline.create(:creator => params[:timeline][:creator], :subscribers => current_subs + "," + params[:timeline][:subscribers].to_s, :name => params[:timeline][:name])
         else
           params.require(:moment).permit!
@@ -130,7 +133,9 @@ class PlaylistsController < ApplicationController
         params.require(:track).permit!
         t = Track.new(params[:track])
         t.save
+
         Rails.logger.debug t.errors.full_messages
+        redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
       end
     end
   end

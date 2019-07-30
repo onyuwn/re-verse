@@ -86,7 +86,7 @@
       <% (1..12).each do |i| %>
         <% if @tlhash[i] != nil && params[:focused_moment] == nil%>
           <% if @tlhash[i][1] != nil %>
-            <div id='timeline-item' class='playlist-dob'>
+            <div id='timeline-item' class='playlist-dob <%=@tlhash[i][1][0][2].name.to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "") %>'>
               <ul>
                 <li><%= link_to @tlhash[i][1][0][2].name.to_s, {:controller => "playlists", :action => "index", :focused_moment => @tlhash[i][1][0][2].name.to_s} %></li>
               </ul>
@@ -94,15 +94,15 @@
           <% end %>
           <% @tlhash[i][0].each do |item| %>
             <% if item.class == RSpotify::Playlist %>
-              <div id='timeline-item' class='playlist-dob'>
+              <div id='timeline-item' class='playlist-dob <%= item.name.to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "") %>'>
                 <ul>
-                  <li><span class="badge badge-pill badge-dark"><%= item.name %></span></li>
-                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name}, class: "timeline-item" %></li>
+                  <li><span class="badge badge-pill badge-dark"><%= item.name.to_s.gsub(/\s+/, "").gsub(/\s+/, "") %></span></li>
+                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name} %></li>
                   <li><span class="badge badge-pill badge-dark">Playlist created on <%=item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s%></span></li>
                 </ul>
               </div>
             <% else %>
-              <div id='timeline-item' class='track-item'>
+              <div id='timeline-item' class='track-item <%= item[0].title.gsub(/[^a-z ]/, '').gsub(/\s+/, "") %>'>
                 <ul>
                   <li><span class="badge badge-pill badge-dark"><%= item[0].title %></span></li>
                   <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
@@ -118,7 +118,7 @@
           <% if @tlhash[i] != nil && @tlhash[i][1] != nil %>
             <% if @tlhash[i][1][0][2].name == params[:focused_moment] %>
               <% @tlhash[i][1].each do |item| %>
-                <div id='timeline-item' class='track-item'>
+                <div id='timeline-item' class='track-item <%=item[0].title.gsub(/[^a-z ]/, '').gsub(/\s+/, "")%>'>
                   <ul>
                     <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "top"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
                   </ul>
@@ -140,5 +140,18 @@
         </ul>
       </div>
     </div>
+
+    <script language="javascript" type="text/javascript">
+      $(document).ready(function() {
+        console.log("going to <%=@focused_memory %>");
+        $(".<%=@focused_memory %>").fadeTo(10, 0.1);
+        $('#timeline-container').animate({
+            scrollLeft: $(".<%=@focused_memory %>").offset().left
+        }, 2000, "linear", function() {
+          $(".<%=@focused_memory %>").fadeTo(2000, 1);
+        });
+      });
+    </script>
+
   </body>
 </html>
