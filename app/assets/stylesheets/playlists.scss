@@ -2,14 +2,55 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.vl {
-  position: absolute;
-  left: 13px;
-  top: 0;
-  content: "";
-  height: 100%;
-  width: 0;
-  border-left: 2px dashed #000;
+.memory-append img{
+  padding-bottom:15% !important;
+  box-shadow: none !important;
+}
+
+.moment-icon img{
+  padding-bottom:15% !important;
+  box-shadow: none !important;
+}
+
+.icon {
+  height:12%;
+  width:12%;
+  float:right;
+  margin-right:10%;
+}
+
+#moment-icon {
+  stroke:#fff;
+}
+
+#moment-icon:hover {
+  stroke:black;
+}
+
+#edit-icon {
+  display: block;
+  margin: auto 0;
+  stroke: #fff;
+  stroke-miterlimit:10;
+  stroke-width:2%;
+}
+
+#edit-icon:hover {
+  stroke: #c94040;
+  stroke-width:5%;
+}
+
+#editing {
+  display: block;
+  margin: auto 0;
+  stroke: #fff;
+  stroke: #c94040;
+  stroke-width:5%;
+}
+
+#editing:hover {
+  stroke: #fff;
+  stroke-width:2%;
 }
 
 #timeline-item {
@@ -72,9 +113,12 @@ ul {
 }
 
 #filter-controls {
-  display:inline;
-  padding-right: 2%;
+  display:inline-block;
   float:right;
+}
+
+.filter-item {
+  display:inline;
 }
 
 #main-controls {
@@ -117,9 +161,8 @@ ul {
 }
 
 #timeline-nav a {
-  display: inline-block;
+  display: inline;
   background-color: #474747;
-  padding: 10px;
 }
 
 body {
@@ -203,7 +246,6 @@ p {
 }
 
 a, a:hover, a:focus {
-    color: inherit;
     text-decoration: none;
     transition: all 0.3s;
 }
@@ -216,13 +258,6 @@ a, a:hover, a:focus {
 .selected-track {
   height: 30%;
   transition: height 2s;
-}
-
-#month-bar {
-  //   display:block;
-  //   position: absolute;
-  //   top: 50%;
-  //   z-index: -1;
 }
 
 .month-bar-item {
