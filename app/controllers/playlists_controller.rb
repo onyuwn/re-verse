@@ -9,6 +9,10 @@ class PlaylistsController < ApplicationController
   protect_from_forgery except: :add_memory
 
   def index
+    if params[:new_item] != nil
+      @focused_memory = params[:new_item].to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+    end
+
     @user = RSpotify::User.new(session[:user])
     @current_timeline = Timeline.where(:creator => @user.display_name)
     @playlists =  @user.playlists
@@ -17,7 +21,12 @@ class PlaylistsController < ApplicationController
 
     @months = {}
 
+    @moments.each do |m|
+      @months[m.start_date.month] = @months[m.start_date.month].to_i + 1
+    end
+
     @tracks_array = @tracks.to_a #tracks (memories)
+
     @tlhash = {} # {month-int => [track, playlist, track..]} each array is sorted by date later..
     @momenthash = {}
     @playlists.each do |p|
@@ -56,12 +65,11 @@ class PlaylistsController < ApplicationController
           if moment_item == true
             if @momenthash[new_track[2].start_date.month] == nil
               @momenthash[new_track[2].start_date.month] = []
-              @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
             end
             @momenthash[new_track[2].start_date.month] << new_track
           else
-            @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
             @tlhash[t.memory_date.month] << new_track
+            @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
           end
           @tracks_array.delete_at(i)
         end
@@ -118,7 +126,6 @@ class PlaylistsController < ApplicationController
         if params[:moment].eql? nil
           params.require(:timeline).permit!
           current_subs = Timeline.where(:creator => @user.display_name)[0].subscribers.to_s
-
           Timeline.create(:creator => params[:timeline][:creator], :subscribers => current_subs + "," + params[:timeline][:subscribers].to_s, :name => params[:timeline][:name])
         else
           params.require(:moment).permit!
@@ -130,9 +137,12 @@ class PlaylistsController < ApplicationController
         params.require(:track).permit!
         t = Track.new(params[:track])
         t.save
+
         Rails.logger.debug t.errors.full_messages
+        redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
       end
     end
+    Rails.logger.info @months.inspect
   end
 
   def timeline
@@ -166,13 +176,10 @@ class PlaylistsController < ApplicationController
       end
       @playlists_h[p.name] = track_names
     end
-
   end
 
   def edit
     @track = Track.where(username: session[:user]['display_name'], playlist_name: params[:playlist_name], title: params[:track_name]).order(:title)
-
-    respond_modal_with @track
 
     if request.method.eql? "POST"
       params.require(:track).permit!
@@ -195,6 +202,12 @@ class PlaylistsController < ApplicationController
 
   def create
     track = new Track()
+  end
+
+  def destroy
+    @user = RSpotify::User.new(session[:user])
+    Track.where(:title => params[:track_title], :username => @user.display_name.to_s).destroy_all
+    redirect_to :action => "index", :controller => "playlists", :edit => "true"
   end
 
 end

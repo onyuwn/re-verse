@@ -15,24 +15,24 @@
 </div>
 
 
-<div id="timeline-nav" style="position:static">
-  <p class="back"><%=link_to 'back', {:controller => 'playlists', :action => 'index', :user => @user.to_hash}, {class: "btn btn-primary"}%></p>
-  <h1> <%= @user.display_name %>'s timeline</h1>
-  <div id="main-controls">
-    <%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %>
-    <%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#defineMoment'} %>
-    <%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'btn btn-primary', 'data-target' => '#shareTimeline'} %>
+<nav class="navbar navbar-dark shadow">
+  <a href="/playlists/index" class="navbar-brand mb-0 h1"><%= @user.display_name %>'s timeline</a>
+  <ul class="nav nav-pills">
+    <li class='nav-item'><%= link_to "edit", "#addMemory", {'data-toggle' => 'modal', 'id' => 'edit', 'class' => 'nav-link', 'data-target' => '#addMemory', 'id' => 'edit-button'} %></li>
+  </ul>
+</nav>
+
+<div id="current-memory">
+  <div id="track-art-container">
+    <img class='track-art' src=<%= @tracks[0].imageurl %>/>
   </div>
+
+  <% unless @tracks[0].nil? %>
+    <h4 class='memory'><%= @tracks[0].memory %></h4>
+  <% end %>
 </div>
 
-<div id="current-track">
-  <img class='track-art' src=<%= @tracks[0].imageurl %>>
-</div>
-
-<% unless @tracks[0].nil? %>
-  <h4 class='memory'><%= @tracks[0].memory %></h4>
-<% end %>
-<p><%= link_to "edit", "#addMemory", {'data-toggle' => 'modal', 'id' => 'edit', 'class' => 'btn btn-primary', 'data-target' => '#addMemory'} %></p>
+<p></p>
 <!-- <p id='play' class='button'><%=link_to 'play', {:controller => 'players', :action => 'play', :playlist_name => @playlist_name, :track_name => @track_name} %></p> -->
 
 <% unless @track.nil? %>
@@ -43,7 +43,7 @@
           rgba(30, 32, 35, 0.45),
           rgba(30, 32, 35, 0.45)
         ),
-        url(<%= @track.album.images[0]['url'] %>);
+        url('<%= @track.album.images[1]['url'] %>') !important;
     }
   </style>
 <% end %>

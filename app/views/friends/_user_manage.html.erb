@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">Unsubscribe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sharedtls.each do |t| %>
+      <tr>
+        <td><%= t.name %></td>
+        <td><%= link_to "X", {:controller => "friends", :action => "unsubscribe", :timeline => t.name} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

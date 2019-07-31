@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   get 'playlists/edit' => 'playlists/edit', :as => :edit
   get 'welcome/index'
   get 'players/index'
+  get 'playlists/destroy'
   get 'friends/index'
   get 'players/play'
   get 'players/web_player'
   get 'users/dashboard'
+  get 'friends/unsubscribe'
 
   post 'playlists/timeline'
   post 'playlists/edit'

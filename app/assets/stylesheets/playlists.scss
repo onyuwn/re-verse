@@ -1,10 +1,56 @@
 // Place all the styles related to the Playlists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#timeline-bar {
-  height:20px;
-  background-color: black;
-  vertical-align: middle;
+
+.memory-append img{
+  padding-bottom:15% !important;
+  box-shadow: none !important;
+}
+
+.moment-icon img{
+  padding-bottom:15% !important;
+  box-shadow: none !important;
+}
+
+.icon {
+  height:12%;
+  width:12%;
+  float:right;
+  margin-right:10%;
+}
+
+#moment-icon {
+  stroke:#fff;
+}
+
+#moment-icon:hover {
+  stroke:black;
+}
+
+#edit-icon {
+  display: block;
+  margin: auto 0;
+  stroke: #fff;
+  stroke-miterlimit:10;
+  stroke-width:2%;
+}
+
+#edit-icon:hover {
+  stroke: #c94040;
+  stroke-width:5%;
+}
+
+#editing {
+  display: block;
+  margin: auto 0;
+  stroke: #fff;
+  stroke: #c94040;
+  stroke-width:5%;
+}
+
+#editing:hover {
+  stroke: #fff;
+  stroke-width:2%;
 }
 
 #timeline-item {
@@ -13,12 +59,12 @@
   padding-left: 2%;
   padding-right: 2%;
   padding-bottom: 5%;
+  margin-top:3%;
   text-align: center;
 }
 
-#timeline-item:hover > ul li h1 {
-  visibility: visible;
-  opacity: 1;
+ul {
+  padding-top:2%;
 }
 
 #timeline-item ul {
@@ -35,9 +81,8 @@
 #timeline-container img{
   display: block;
   margin:auto;
-  box-shadow: 5px 5px 5px #212121;
-  transition: box-shadow 0.1s ease-in-out;
-  transition: transform 0.25s ease-out;
+  box-shadow: 0px 3px 3px #212121;
+  transition: box-shadow 0.25s ease-in-out;
 }
 
 #timeline-container{
@@ -68,8 +113,12 @@
 }
 
 #filter-controls {
-  display:inline;
+  display:inline-block;
   float:right;
+}
+
+.filter-item {
+  display:inline;
 }
 
 #main-controls {
@@ -81,18 +130,15 @@
   display:inline;
 }
 
-hr {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color:#666;
-  position: fixed;
-  z-index: -1;
+#timeline-item-bar {
+  display: inline-block;
+  width: 10%;
+  height:200%;
+  text-align: center;
 }
 
 #timeline-container img:hover {
-  transform: translate(0, 50px);
-  box-shadow: 10px 10px 5px #212121;
+  box-shadow: 5px 5px 5px #212121;
 }
 
 #timeline-nav {
@@ -110,20 +156,22 @@ hr {
   display:inline;
 }
 
+.navbar-dark {
+  background-color: #171717;
+}
+
 #timeline-nav a {
-  display: inline-block;
+  display: inline;
   background-color: #474747;
-  padding: 10px;
 }
 
 body {
-  background:#3b3a3a !important;
+  background:#575656 !important;
   //font-family: 'Poppins', sans-serif;
 }
 
 #timeline-container {
   overflow-x: auto;
-  padding-top: 13.8%;
 }
 
 #playlist-header {
@@ -142,16 +190,27 @@ body {
   background-color: #1e5f99;
 }
 
-#current-track {
+#current-memory {
   text-align:center;
   justify-content: center;
   align-items: center;
   display:block;
+  background-color: #e6e6e6;
+  padding:2%;
+  margin-left:35%;
+  margin-right:35%;
+  border-radius: 1%;
+}
+
+#track-art-container {
+  height:100%;
+  width:100%;
+  box-shadow: 2px 3px 3px #212121;
 }
 
 .track-art {
-  height:30%;
-  width: 30%;
+  height:100%;
+  width: 100%;
 }
 
 .previous-track-art {
@@ -187,7 +246,6 @@ p {
 }
 
 a, a:hover, a:focus {
-    color: inherit;
     text-decoration: none;
     transition: all 0.3s;
 }
@@ -200,13 +258,6 @@ a, a:hover, a:focus {
 .selected-track {
   height: 30%;
   transition: height 2s;
-}
-
-#month-bar {
-  //   display:block;
-  //   position: absolute;
-  //   top: 50%;
-  //   z-index: -1;
 }
 
 .month-bar-item {
