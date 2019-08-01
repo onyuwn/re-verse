@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get 'players/web_player'
   get 'users/dashboard'
   get 'friends/unsubscribe'
+  get 'tutorial/index'
+  get 'tutorial/timeline'
+  get 'tutorial/destroy'
 
   post 'playlists/timeline'
   post 'playlists/edit'
