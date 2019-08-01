@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       #redirect_to :controller=> "playlists",:action=>"index" #new users go str8 to timeline
       #send new users to tutorial
       session[:user] = 'jakeherman-3'
-      redirect_to :controller => "tutorial", :action => "index" 
+      redirect_to :controller => "tutorial", :action => "index", :step => 1
     else
       #see make sure their moments and tracks are linked
       if timeline[0].track.count == 0 && user_memories.count > 0

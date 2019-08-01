@@ -6,6 +6,11 @@ class TutorialController < ApplicationController
     if params[:new_item] != nil
       @focused_memory = params[:new_item].to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "")
     end
+    #use params[:step] to check current step
+    if params[:step].to_i == 2 #hard coding in instructions based on step
+      @focused_memory = 'testmoment' #step two focuses on a timeline item and animates there
+      #set @focused_memory to the name of an item's class for website to translate there
+    end
 
     @user = RSpotify::User.find('jakeherman-3')
     @current_timeline = Timeline.where(:creator => @user.display_name)

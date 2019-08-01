@@ -77,6 +77,10 @@
         </div>
       </ul>
     </nav>
+    <%# renders the step based on web params, set by previous page (login page in users_controller) %>
+    <div id="tutorial-alert">
+      <%= render "tutorial/steps/step_" + params[:step] %>
+    </div>
 
     <div id="timeline-container">
 
