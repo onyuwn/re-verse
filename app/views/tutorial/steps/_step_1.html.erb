@@ -1,7 +1,5 @@
 <%# copy and paste this into a new step file under tutorial/steps/ name just liek the others :) %>
-<div id="instructions-container">
-  <h3>Welcome</h3>
-  <p>This is your timeline uwu</p>
-  <%# the code below advances to the next step %>
-  <p><%= link_to "next", {:controller => 'tutorial', :action => 'index', :step => params[:step].to_i + 1} %><p>
-</div>
+<h3>Welcome</h3>
+<p>This is your timeline.</p>
+<%# the code below advances to the next step %>
+<p><%= link_to "Start Tutorial", {:controller => 'tutorial', :action => 'index', :step => params[:step].to_i + 1} %><p>

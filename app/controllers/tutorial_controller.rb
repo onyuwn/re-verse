@@ -9,9 +9,14 @@ class TutorialController < ApplicationController
     end
     #use params[:step] to check current step
     if params[:step].to_i == 2 #hard coding in instructions based on step
-      @focused_memory = 'tutorial' #step two focuses on a timeline item and animates there
+      @focused_memory = 'ouisrotchocket' #step two focuses on a timeline item and animates there
       #set @focused_memory to the name of an item's class for website to translate there
+    elsif  params[:step].to_i == 3
+      @focused_memory = 'alkingheow'
+    elsif  params[:step].to_i == 4
+      @focused_memory = 'tutorial'
     end
+
 
     @user = RSpotify::User.find('jakeherman-3')
     @current_timeline = Timeline.where(:creator => @user.display_name)

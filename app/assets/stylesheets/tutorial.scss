@@ -2,22 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 #tutorial-alert {
-  width:100%;
+  width:50%;
   display:block;
-  position:relative;
-  margin: auto;
-}
-
-#timeline-container {
-  margin-top: 15%;
-}
-
-#instructions-container {
-  width:30%;
-  background-color: #ededed;
   position:fixed;
-  box-shadow: 2px 2px 2px black;
   margin: auto;
+  background-color: #ededed;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px black;
   padding:1%;
-  display:block;
+  left: 25%;
+  bottom: 7.5%;
+}
+
+nav .h1 {
+  color:#ededed;
+}
+
+.tutorial-focused {
+  border: 2px solid #ffffff;
+
 }

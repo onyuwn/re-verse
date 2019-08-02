@@ -63,26 +63,43 @@
         <a href="/friends/index" class="navbar-brand mb-0 h1">Tutorial Timeline</a>
       <% end %>
       <ul class="nav nav-pills">
-        <% unless params[:step].to_i <= 2 %>
-          <li class="nav-item"><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#addMemory'} %></li>
-          <li class="nav-item"><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#defineMoment'} %></li>
-          <li class="nav-item"><%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#shareTimeline'} %></li>
-          <div id="filter-controls">
-            <li class="nav-item icon">
-              <% if params[:edit].eql? 'true' %>
-                <%= link_to inline_svg('edit.svg', id: 'editing', size: "100% * 100%"), {'controller' => 'tutorial', 'action' => 'index', 'edit' => 'false'} %>
-              <% else %>
-                <%= link_to inline_svg('edit.svg', id: 'edit-icon', size: "100% * 100%"), {'controller' => 'tutorial', 'action' => 'index', 'edit' => 'true'} %>
-              <% end %>
-            </li>
-          </div>
+        <% if params[:step].to_i >= 5 %>
+          <% if params[:step].to_i == 5 %>
+            <li class="nav-item tutorial-focused"><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#addMemory'} %></li>
+          <% else %>
+            <li class="nav-item "><%= link_to "add memory", "#addMemory", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#addMemory'} %></li>
+          <% end %>
+
+          <% if params[:step].to_i >= 6 %>
+            <% if params[:step].to_i == 6 %>
+              <li class="nav-item tutorial-focused"><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#defineMoment'} %></li>
+            <% else %>
+              <li class="nav-item "><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#defineMoment'} %></li>
+            <% end %>
+          <% end %>
+
+          <% if params[:step].to_i >= 7 %>
+            <% if params[:step].to_i == 7 %>
+              <li class="nav-item tutorial-focused"><%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#shareTimeline'} %></li>
+            <% else %>
+              <li class="nav-item "><%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#shareTimeline'} %></li>
+            <% end %>
+          <% end %>
+
+          <% if params[:step].to_i >= 8 %>
+            <div id="filter-controls">
+              <li class="nav-item icon">
+                <% if params[:edit].eql? 'true' %>
+                  <%= link_to inline_svg('edit.svg', id: 'editing', size: "100% * 100%"), {'controller' => 'tutorial', 'action' => 'index', 'edit' => 'false'} %>
+                <% else %>
+                  <%= link_to inline_svg('edit.svg', id: 'edit-icon', size: "100% * 100%"), {'controller' => 'tutorial', 'action' => 'index', 'edit' => 'true'} %>
+                <% end %>
+              </li>
+            </div>
+          <% end %>
         <% end %>
       </ul>
     </nav>
-    <%# renders the step based on web params, set by previous page (login page in users_controller) %>
-    <div id="tutorial-alert">
-      <%= render "tutorial/steps/step_" + params[:step] %>
-    </div>
 
     <div id="timeline-container">
 
@@ -160,6 +177,11 @@
       </div>
     </div>
 
+    <%# renders the step based on web params, set by previous page (login page in users_controller) %>
+    <div id="tutorial-alert">
+      <%= render "tutorial/steps/step_" + params[:step] %>
+    </div>
+
     <script language="javascript" type="text/javascript">
       var destroyShowing = '<%= params[:edit] %>' === 'true';
 
@@ -168,7 +190,7 @@
         console.log("going to <%=@focused_memory %>");
         $(".<%=@focused_memory %>").fadeTo(10, 0.1);
         $('#timeline-container').animate({
-            scrollLeft: $(".<%=@focused_memory %>").offset().left - ($(".<%=@focused_memory %>").offset().left * .05)
+            scrollLeft: $(".<%=@focused_memory %>").offset().left - ($(".<%=@focused_memory %>").offset().left * .275)
         }, 2000, "swing", function() {
           $(".<%=@focused_memory %>").fadeTo(2000, 1);
         });
