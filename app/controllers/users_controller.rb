@@ -23,10 +23,12 @@ class UsersController < ApplicationController
       redirect_to :controller=> "playlists",:action=>"index" #new users go str8 to timeline
     else
       #see make sure their moments and tracks are linked
-      if timeline[0].track.count == 0 && user_memories.count > 0
+      Rails.logger.info "oeeoe why does this fix uhhh"
+      Rails.logger.info timeline[0].track
+      if timeline[0].track == 0 && user_memories.count > 0
         user_memories.each do |mem|
           mem.timeline_id = timeline[0].id
-          mom.save
+          mem.save
         end
       end
 

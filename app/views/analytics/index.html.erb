@@ -1,3 +1,7 @@
+<nav class="navbar navbar-dark shadow">
+  <a href="/analytics/index" class="navbar-brand mb-0 h1">Site Analytics</a>
+</nav>
+
 <div class="data-container">
   <h3>Timelines</h3>
   <table class="table">
@@ -15,7 +19,7 @@
           <td><%= i+1 %></td>
           <td><%= t.creator %></td>
           <td><%= t.subscribers.split(',').length %></td>
-          <td><%= link_to "timeline", {:controller => "friends", :action => "unsubscribe", :user => t.creator} %></td>
+          <td><%= link_to "timeline" %></td>
         </tr>
       <% end %>
     </tbody>
