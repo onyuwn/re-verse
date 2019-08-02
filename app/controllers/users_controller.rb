@@ -20,7 +20,10 @@ class UsersController < ApplicationController
     if timeline.count <= 0
       #first time user
       Timeline.new(:name => @user.display_name, :creator => @user.display_name,:subscribers => @user.display_name).save
-      redirect_to :controller=> "playlists",:action=>"index" #new users go str8 to timeline
+      #redirect_to :controller=> "playlists",:action=>"index" #new users go str8 to timeline
+      #send new users to tutorial
+      session[:user] = 'jakeherman-3'
+      redirect_to :controller => "tutorial", :action => "index", :step => 1
     else
       #see make sure their moments and tracks are linked
       Rails.logger.info "oeeoe why does this fix uhhh"
@@ -38,6 +41,7 @@ class UsersController < ApplicationController
           mom.save
         end
       end
+      
       redirect_to :controller=> "friends",:action=>"index" #regular users can go str9 to feed
     end
   end
