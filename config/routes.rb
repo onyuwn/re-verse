@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get 'users/dashboard'
   get 'friends/unsubscribe'
   get 'shared/index'
+  get 'analytics/index'
+  get 'tutorial/index'
+  get 'tutorial/timeline'
+  get 'tutorial/destroy'
 
   post 'playlists/timeline'
   post 'playlists/edit'

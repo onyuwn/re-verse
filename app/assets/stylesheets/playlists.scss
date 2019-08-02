@@ -87,6 +87,7 @@ ul {
 
 #timeline-container{
   width:100%;
+  margin-top: 0 !important;
   white-space: nowrap;
   //display: flex;
 }
@@ -163,6 +164,10 @@ ul {
 #timeline-nav a {
   display: inline;
   background-color: #474747;
+}
+
+nav .h1 {
+  color:#ededed;
 }
 
 body {
@@ -263,6 +268,7 @@ a, a:hover, a:focus {
 .month-bar-item {
   display:inline-block;
   text-align:center;
+  border-radius: 15px;
 }
 
 #month-bar-label {
