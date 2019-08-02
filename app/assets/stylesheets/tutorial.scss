@@ -4,14 +4,15 @@
 #tutorial-alert {
   width:50%;
   display:block;
-  position:fixed;
+  position:absolute;
   margin: auto;
   background-color: #ededed;
   border-radius: 10px;
   box-shadow: 2px 2px 2px black;
   padding:1%;
   left: 25%;
-  bottom: 7.5%;
+  top: 500px;
+  z-index: -2;
 }
 
 nav .h1 {
