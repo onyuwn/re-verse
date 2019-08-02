@@ -26,20 +26,22 @@ class UsersController < ApplicationController
       redirect_to :controller => "tutorial", :action => "index", :step => 1
     else
       #see make sure their moments and tracks are linked
-      Rails.logger.info timeline[0].track.count
-      # if timeline[0].track.count == 0 && user_memories.count > 0
-      #   user_memories.each do |mem|
-      #     mem.timeline_id = timeline[0].id
-      #     mem.save
-      #   end
-      # end
-      #
-      # if timeline[0].track.count == 0 && user_moments.count > 0
-      #   user_moments.each do |mom|
-      #     mom.timeline_id = timeline[0].id
-      #     mom.save
-      #   end
-      # end
+      Rails.logger.info "oeeoe why does this fix uhhh"
+      Rails.logger.info timeline[0].track
+      if timeline[0].track == 0 && user_memories.count > 0
+        user_memories.each do |mem|
+          mem.timeline_id = timeline[0].id
+          mem.save
+        end
+      end
+
+      if timeline[0].track.count == 0 && user_moments.count > 0
+        user_moments.each do |mom|
+          mom.timeline_id = timeline[0].id
+          mom.save
+        end
+      end
+      
       redirect_to :controller=> "friends",:action=>"index" #regular users can go str9 to feed
     end
   end
