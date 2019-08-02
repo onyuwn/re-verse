@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'players/web_player'
   get 'users/dashboard'
   get 'friends/unsubscribe'
+  get 'shared/index'
   get 'analytics/index'
   get 'tutorial/index'
   get 'tutorial/timeline'

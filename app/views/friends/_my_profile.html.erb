@@ -29,7 +29,7 @@
     <% @subscribers.each do |s| %>
       <tr>
         <td><%= s %></td>
-        <td><%= link_to "timeline", {:controller => "friends", :action => "unsubscribe", :user => s} %></td>
+        <td><%= link_to "timeline", {:controller => "shared", :action => "index", :shared => s} %></td>
       </tr>
     <% end %>
   </tbody>
