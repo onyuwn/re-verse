@@ -20,22 +20,26 @@ class UsersController < ApplicationController
     if timeline.count <= 0
       #first time user
       Timeline.new(:name => @user.display_name, :creator => @user.display_name,:subscribers => @user.display_name).save
-      redirect_to :controller=> "playlists",:action=>"index" #new users go str8 to timeline
+      #redirect_to :controller=> "playlists",:action=>"index" #new users go str8 to timeline
+      #send new users to tutorial
+      session[:user] = 'jakeherman-3'
+      redirect_to :controller => "tutorial", :action => "index", :step => 1
     else
       #see make sure their moments and tracks are linked
-      if timeline[0].track.count == 0 && user_memories.count > 0
-        user_memories.each do |mem|
-          mem.timeline_id = timeline[0].id
-          mom.save
-        end
-      end
-
-      if timeline[0].track.count == 0 && user_moments.count > 0
-        user_moments.each do |mom|
-          mom.timeline_id = timeline[0].id
-          mom.save
-        end
-      end
+      Rails.logger.info timeline[0].track.count
+      # if timeline[0].track.count == 0 && user_memories.count > 0
+      #   user_memories.each do |mem|
+      #     mem.timeline_id = timeline[0].id
+      #     mem.save
+      #   end
+      # end
+      #
+      # if timeline[0].track.count == 0 && user_moments.count > 0
+      #   user_moments.each do |mom|
+      #     mom.timeline_id = timeline[0].id
+      #     mom.save
+      #   end
+      # end
       redirect_to :controller=> "friends",:action=>"index" #regular users can go str9 to feed
     end
   end

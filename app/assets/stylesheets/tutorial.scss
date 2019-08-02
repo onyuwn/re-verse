@@ -1,0 +1,24 @@
+// Place all the styles related to the Tutorial controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#tutorial-alert {
+  width:50%;
+  display:block;
+  position:fixed;
+  margin: auto;
+  background-color: #ededed;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px black;
+  padding:1%;
+  left: 25%;
+  bottom: 7.5%;
+}
+
+nav .h1 {
+  color:#ededed;
+}
+
+.tutorial-focused {
+  border: 2px solid #ffffff;
+
+}
