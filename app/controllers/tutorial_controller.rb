@@ -1,6 +1,7 @@
 class TutorialController < ApplicationController
   protect_from_forgery except: :find_track_for_memory
   protect_from_forgery except: :add_memory
+  include TutorialHelper
 
   def index
     if params[:new_item] != nil
@@ -8,7 +9,7 @@ class TutorialController < ApplicationController
     end
     #use params[:step] to check current step
     if params[:step].to_i == 2 #hard coding in instructions based on step
-      @focused_memory = 'testmoment' #step two focuses on a timeline item and animates there
+      @focused_memory = 'tutorial' #step two focuses on a timeline item and animates there
       #set @focused_memory to the name of an item's class for website to translate there
     end
 
@@ -16,12 +17,24 @@ class TutorialController < ApplicationController
     @current_timeline = Timeline.where(:creator => @user.display_name)
     @playlists =  @user.playlists
     @friendly_playlists = ['Die Lit but in order of best song to worst', 'shirt off', 'Louis V Crotch Rocket', 'Promo Video']
-    @tracks = Track.where(:username => @user.display_name).order(:memory_date)
-    @moments = Moment.where(:user => @user.display_name)
+
+    @friendly_playlists.each do |fp|
+      if Track.where(:playlist_name => fp, :username => @user.display_name.to_s + "tutorial").length == 0
+        Track.create(get_dummy_track(fp))
+      end
+    end
+
+    tutorial_moments = Moment.where(:user => @user.display_name.to_s + "tutorial")
+    if tutorial_moments.length == 0
+      Moment.create(get_dummy_moment())
+    end
+
+    @tracks = Track.where(:username => @user.display_name + "tutorial").order(:memory_date)
+    @moments = Moment.where(:user => @user.display_name + "tutorial")
+
     @clean_playlists = []
-    @playlists.each_with_index do |p, i|
+    @playlists.each do |p|
       if @friendly_playlists.include? p.name.to_s
-        Rails.logger.info p.name
         @clean_playlists << p
       end
     end
@@ -43,46 +56,51 @@ class TutorialController < ApplicationController
       @months[p.tracks_added_at[p.tracks_added_at.keys[0]].month] = @months[p.tracks_added_at[p.tracks_added_at.keys[0]].month].to_i + 1
       @tlhash[p.tracks_added_at[p.tracks_added_at.keys[0]].month] << p
     end
-    @tracks_array.each_with_index do |t, i|
-      if @tracks_array.length - 2 > i
-        if @tlhash[t.memory_date.month] == nil
-          @tlhash[t.memory_date.month] = []
-        end
-        new_track = []
-        new_track << t #track memory
-        #match track to track data by looking more into playlist
-        matched_playlist = []
-        @playlists.each do |pp|
-          if pp.name.eql? t.playlist_name
-            matched_playlist = pp
-          end
-        end
 
-        matched_playlist.tracks.each do |pt| #match track name to rspotify track object
-          if pt.name.eql? t.title
-            new_track << pt #add track object in along with memory
-          end
-        end
-        moment_item = false
-        @moments.each do |m|
-          if t.memory_date <= m.end_date and t.memory_date >= m.start_date
-            new_track << m
-            moment_item = true
-          end
-        end
+    @clean_playlists.each do |p|
+      if @tlhash[p.tracks_added_at[p.tracks_added_at.keys[0]].month] == nil
+        @tlhash[p.tracks_added_at[p.tracks_added_at.keys[0]].month] = []
+      end
 
-        if moment_item == true
-          if @momenthash[new_track[2].start_date.month] == nil
-            @momenthash[new_track[2].start_date.month] = []
+      if @tracks_array.length > 0
+        @tracks_array.each_with_index do |t, i|
+          if @tlhash[t.memory_date.month] == nil
+            @tlhash[t.memory_date.month] = []
           end
-          @momenthash[new_track[2].start_date.month] << new_track
-        else
-          @tlhash[t.memory_date.month] << new_track
-          @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
+          new_track = []
+          new_track << t #track memory
+          #match track to track data by looking more into playlist
+          matched_playlist = []
+          @clean_playlists.each do |pp|
+            if pp.name.eql? t.playlist_name
+              matched_playlist = pp
+            end
+          end
+
+          matched_playlist.tracks.each do |pt| #match track name to rspotify track object
+            if pt.name.eql? t.title
+              new_track << pt #add track object in along with memory
+            end
+          end
+          moment_item = false
+          @moments.each do |m|
+            if t.memory_date <= m.end_date and t.memory_date >= m.start_date
+              new_track << m
+              moment_item = true
+            end
+          end
+
+          if moment_item == true
+            if @momenthash[new_track[2].start_date.month] == nil
+              @momenthash[new_track[2].start_date.month] = []
+            end
+            @momenthash[new_track[2].start_date.month] << new_track
+          else
+            @tlhash[t.memory_date.month] << new_track
+            @months[t.memory_date.month] = @months[t.memory_date.month].to_i + 1
+          end
+          @tracks_array.delete_at(i)
         end
-        @tracks_array.delete_at(i)
-      else
-        break
       end
     end
     #iterate over each entry in tl hash and sort array by date
@@ -107,6 +125,7 @@ class TutorialController < ApplicationController
           datehash[itemday] << i
         end
       end
+
       if datehash.keys.max != nil
         (1..datehash.keys.max).each do |day| #iterate over every day in month
           if datehash[day] != nil
@@ -116,8 +135,10 @@ class TutorialController < ApplicationController
           end
         end
       end
+
       @tlhash[k] = [items_sorted, month_moment]
     end
+
     @months_colors = {1 => "#5f7ed4", 2 => "#d45f80", 3 => "#5fd488", 4 => "#5fced4", 5 => "#d4d25f", 6 => "#d4945f", 7 => "#b15fd4", 8 => "#d4765f", 9 => "#5fd4ad", 10 => "#d49d5f", 11 => "#735fd4", 12 => "#e5f2a0"}
 
     @playlists_h = {}
@@ -150,5 +171,6 @@ class TutorialController < ApplicationController
         redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
       end
     end
+    Rails.logger.info "GO TIME >:)"
   end
 end
