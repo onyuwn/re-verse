@@ -1,7 +1,7 @@
 # Change these
 server '157.230.158.251', roles: [:web, :app, :db], primary: true
 
-set :repo_url,        'git@github.com:hermje/re-verse.git'
+set :repo_url,        'git://github.com:hermje/re-verse.git'
 set :application,     're-verse'
 set :user,            'deploy'
 set :puma_threads,    [4, 16]
