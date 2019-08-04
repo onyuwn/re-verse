@@ -16,10 +16,7 @@
 
 //= require jquery3
 //= require bootstrap
-//= require popper
 //= require_tree .
-
-import 'bootstrap';
 
 $(document).ready(function () {
 
