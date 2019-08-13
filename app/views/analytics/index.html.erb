@@ -11,6 +11,7 @@
         <th scope="col">User</th>
         <th scope="col">Subscribers</th>
         <th scope="col">View</th>
+        <th scope="col">Destroy</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
           <td><%= t.creator %></td>
           <td><%= t.subscribers.split(',').length %></td>
           <td><%= link_to "timeline" %></td>
+          <td><%= link_to "destroy", {:controller => 'analytics', :action => 'destroy', :user => t.creator} %></td>
         </tr>
       <% end %>
     </tbody>
