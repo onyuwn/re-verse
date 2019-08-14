@@ -20,7 +20,7 @@
           <td><%= i+1 %></td>
           <td><%= t.creator %></td>
           <td><%= t.subscribers.split(',').length %></td>
-          <td><%= link_to "timeline" %></td>
+          <td><%= link_to "timeline", {:controller => 'shared', :action => 'index', :shared => t.creator} %></td>
           <td><%= link_to "destroy", {:controller => 'analytics', :action => 'destroy', :user => t.creator} %></td>
         </tr>
       <% end %>

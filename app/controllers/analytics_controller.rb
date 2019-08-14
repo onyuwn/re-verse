@@ -6,5 +6,6 @@ class AnalyticsController < ApplicationController
 
   def destroy_timeline
     Timline.where(:creator => params[:user]).destroy_all
+    redirect_to :action => 'index'
   end
 end

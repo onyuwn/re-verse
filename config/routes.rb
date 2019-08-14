@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'friends/unsubscribe'
   get 'shared/index'
   get 'analytics/index'
+  get 'analytics/destroy'
   get 'tutorial/index'
   get 'tutorial/timeline'
   get 'tutorial/destroy'
