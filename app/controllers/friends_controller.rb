@@ -5,6 +5,7 @@ class FriendsController < ApplicationController
     rescue NoMethodError => e
       Rails.logger.info "users first time >:)"
       @user = RSpotify::User.new(session[:me])
+      session[:user] = session[:me]
     end
 
     @sharedtls = Timeline.where("subscribers LIKE ?", "%" + @user.email.to_s + "%")

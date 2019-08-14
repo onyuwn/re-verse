@@ -18,6 +18,7 @@ class PlaylistsController < ApplicationController
     rescue NoMethodError => e
       Rails.logger.info "users first time >:)"
       @user = RSpotify::User.new(session[:me])
+      session[:user] = session[:me]
     end
 
     @current_timeline = Timeline.where(:creator => @user.email)
