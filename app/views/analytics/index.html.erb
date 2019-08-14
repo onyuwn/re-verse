@@ -10,6 +10,7 @@
         <th scope="col">#</th>
         <th scope="col">User</th>
         <th scope="col">Subscribers</th>
+        <th scope="col">memory count</th>
         <th scope="col">View</th>
         <th scope="col">Destroy</th>
       </tr>
@@ -20,6 +21,7 @@
           <td><%= i+1 %></td>
           <td><%= t.creator %></td>
           <td><%= t.subscribers.split(',').length %></td>
+          <td><%= Track.where(:username => t.creator).length %>
           <td><%= link_to "timeline", {:controller => 'shared', :action => 'index', :shared => t.creator} %></td>
           <td><%= link_to "destroy", {:controller => 'analytics', :action => 'destroy', :user => t.creator} %></td>
         </tr>

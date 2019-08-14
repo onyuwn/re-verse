@@ -13,7 +13,13 @@ class PlaylistsController < ApplicationController
       @focused_memory = params[:new_item].to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "")
     end
 
-    @user = RSpotify::User.new(session[:user])
+    begin
+      @user = RSpotify::User.new(session[:user])
+    rescue NoMethodError => e
+      Rails.logger.info "users first time >:)"
+      @user = RSpotify::User.new(session[:me])
+    end
+
     @current_timeline = Timeline.where(:creator => @user.display_name)
     @playlists =  @user.playlists
     @tracks = Track.where(:username => @user.display_name).order(:memory_date)

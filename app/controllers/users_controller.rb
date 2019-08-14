@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   def login
     @user = RSpotify::User.new(request.env['omniauth.auth'])
+    session[:me] = @user.to_hash
     session[:user] = @user.to_hash
     timeline = Timeline.where(:name => @user.display_name, :creator => @user.display_name)
     user_memories = Track.where(:name => @user.display_name)
@@ -41,7 +42,7 @@ class UsersController < ApplicationController
           mom.save
         end
       end
-      
+
       redirect_to :controller=> "friends",:action=>"index" #regular users can go str9 to feed
     end
   end
