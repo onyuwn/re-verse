@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
     @playlists = Hash.new
     @user = RSpotify::User.new(session[:user]);
     #all tracks with a memory attached
-    @tracks = Track.where(:username => @user.display_name).order(:playlist_name)
+    @tracks = Track.where(:username => @user.email).order(:playlist_name)
     #we need to organize the tracks and memories by playlist
     @tracks.each do |t|
       if @playlists[t.playlist_name].nil?
@@ -26,7 +26,7 @@ class PlayersController < ApplicationController
       @playlists[t.playlist_name] << [t.title, t.memory, t.imageurl, @playlist_uri]
     end
 
-    @player_response = RSpotify.resolve_auth_request(@user.display_name, "me/player/")
+    @player_response = RSpotify.resolve_auth_request(@user.email, "me/player/")
     @current_song = @player_response
     if @current_song.nil?
       @current_song = " "
@@ -40,7 +40,7 @@ class PlayersController < ApplicationController
     @playlists = []
     Rails.logger.debug "FUFUF"
     Rails.logger.debug params[:playlist_name]
-    @tracks = Track.where(username: @user.display_name, playlist_name: params[:playlist_name])
+    @tracks = Track.where(username: @user.email, playlist_name: params[:playlist_name])
 
     @user.playlists.each do |p|
       if p.name.eql? params[:playlist_name]
@@ -74,7 +74,7 @@ class PlayersController < ApplicationController
   def web_player
     @user = RSpotify::User.new(session[:user]);
     #get currrent song playing to decide what memory to display
-    @player_response = RSpotify.resolve_auth_request(@user.display_name, "me/player/")
+    @player_response = RSpotify.resolve_auth_request(@user.email, "me/player/")
     @current_song = @player_response
     if @current_song.nil?
       @current_song = " "

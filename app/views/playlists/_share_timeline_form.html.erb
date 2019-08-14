@@ -2,16 +2,16 @@
   <h3><%= @current_timeline[0].name %>'s Timeline</h3>
 
   <p>
-    <p>Friend Username:</p><br>
+    <p>Friend Email:</p><br>
     <%= form.text_field :subscribers %>
   </p>
 
   <p>
-    <%= form.hidden_field :creator, :value => session[:user]['display_name'] %>
+    <%= form.hidden_field :creator, :value => session[:user]['email'] %>
   </p>
 
   <p>
-    <%= form.hidden_field :name, :value => session['user']['display_name'] %><br>
+    <%= form.hidden_field :name, :value => session['user']['email'] %><br>
   </p>
 
   <p>

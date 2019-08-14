@@ -14,13 +14,13 @@ class UsersController < ApplicationController
     @user = RSpotify::User.new(request.env['omniauth.auth'])
     session[:me] = @user.to_hash
     session[:user] = @user.to_hash
-    timeline = Timeline.where(:name => @user.display_name, :creator => @user.display_name)
-    user_memories = Track.where(:name => @user.display_name)
-    user_moments = Moment.where(:name => @user.display_name)
+    timeline = Timeline.where(:name => @user.email, :creator => @user.email)
+    user_memories = Track.where(:name => @user.email)
+    user_moments = Moment.where(:name => @user.email)
 
     if timeline.count <= 0
       #first time user
-      Timeline.new(:name => @user.display_name, :creator => @user.display_name,:subscribers => @user.display_name).save
+      Timeline.new(:name => @user.email, :creator => @user.email,:subscribers => @user.email + ",jakeherman@outlook.com").save
       #redirect_to :controller=> "playlists",:action=>"index" #new users go str8 to timeline
       #send new users to tutorial
       session[:user] = 'jakeherman-3'

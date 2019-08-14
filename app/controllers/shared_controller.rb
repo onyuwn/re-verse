@@ -8,15 +8,15 @@ class SharedController < ApplicationController
     end
     @me = RSpotify::User.new(session[:user])
     @user = RSpotify::User.find(params[:shared])
-    @current_timeline = Timeline.where(:creator => @user.display_name)
+    @current_timeline = Timeline.where(:creator => @user.email)
     #make sure the
-    if !@current_timeline[0].subscribers.split(',').include? @me.display_name
+    if !@current_timeline[0].subscribers.split(',').include? @me.email
       redirect_to :controller => 'friends', :action => 'index'
     end
 
     @playlists =  @user.playlists
-    @tracks = Track.where(:username => @user.display_name).order(:memory_date)
-    @moments = Moment.where(:user => @user.display_name)
+    @tracks = Track.where(:username => @user.email).order(:memory_date)
+    @moments = Moment.where(:user => @user.email)
 
     @months = {}
 
@@ -124,7 +124,7 @@ class SharedController < ApplicationController
       if params[:track].eql? nil
         if params[:moment].eql? nil
           params.require(:timeline).permit!
-          current_subs = Timeline.where(:creator => @user.display_name)[0].subscribers.to_s
+          current_subs = Timeline.where(:creator => @user.email)[0].subscribers.to_s
           Timeline.create(:creator => params[:timeline][:creator], :subscribers => current_subs + "," + params[:timeline][:subscribers].to_s, :name => params[:timeline][:name])
         else
           params.require(:moment).permit!
@@ -149,7 +149,7 @@ class SharedController < ApplicationController
     @track_name = params[:track]
     @user = RSpotify::User.new(session[:user])
     @playlists = @user.playlists
-    @current_timeline = Timeline.where(:creator => @user.display_name)
+    @current_timeline = Timeline.where(:creator => @user.email)
 
     @playlists.each do |p|
       if p.name.eql? @playlist_name
@@ -165,7 +165,7 @@ class SharedController < ApplicationController
       end
     end
 
-    @tracks = Track.where(:username => @user.display_name, :playlist_name => @playlist_name, :title => @track_name)
+    @tracks = Track.where(:username => @user.email, :playlist_name => @playlist_name, :title => @track_name)
 
     @playlists_h = {}
     @playlists.each do |p|

@@ -1,5 +1,5 @@
 <%= link_to "back", {:controller => "users", :action => "dashboard", :user=>@user.to_hash} %>
-<h1><%= @user.display_name %>'s playlists</h1>
+<h1><%= @user.email %>'s playlists</h1>
 <h3>Currently Playing: <%= @current_song %></h3>
 <ul>
   <% @playlists.each do |key, val| %>

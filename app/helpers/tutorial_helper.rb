@@ -8,7 +8,7 @@ module TutorialHelper
         :imageurl => "https://drive.google.com/open?id=1uj1Q_LkPQ17pl00EQhRosE5Ir_Ehiqbb",
         :memory_date => Date.new(2018, 4, 22),
         :username => "jakeherman-3tutorial",
-        :timeline_id => 1
+        :timeline_id => Timeline.where(:creator => 'jakeherman-3')[0].id
       }
     elsif playlist_name.eql? 'shirt off'
       return {
@@ -18,7 +18,7 @@ module TutorialHelper
         :imageurl => "https://drive.google.com/open?id=1xNVScdiJK5O1MNgA7hVWrkE_-NNPDVh6",
         :memory_date => Date.new(2019, 12, 7),
         :username => "jakeherman-3tutorial",
-        :timeline_id => 1
+        :timeline_id => Timeline.where(:creator => 'jakeherman-3')[0].id
       }
     elsif playlist_name.eql? 'Louis V Crotch Rocket'
       return {
@@ -28,7 +28,7 @@ module TutorialHelper
         :imageurl => "https://drive.google.com/open?id=1JZ5tGh_MrAoMBEgjus2engulFRVahAGz",
         :memory_date => Date.new(2019, 1, 23),
         :username => "jakeherman-3tutorial",
-        :timeline_id => 1
+        :timeline_id => Timeline.where(:creator => 'jakeherman-3')[0].id
       }
     elsif playlist_name.eql? 'Promo Video'
       return {
@@ -38,7 +38,7 @@ module TutorialHelper
         :imageurl => "https://drive.google.com/open?id=1y3RnzskNbgbG3HEysKfuFdZEZyT_-U1x",
         :memory_date => Date.new(2019, 2, 17),
         :username => "jakeherman-3tutorial",
-        :timeline_id => 1
+        :timeline_id => Timeline.where(:creator => 'jakeherman-3')[0].id
       }
     end
   end
@@ -50,7 +50,7 @@ module TutorialHelper
       :start_date => Date.new(2018, 4, 19),
       :end_date => Date.new(2018, 4, 30),
       :user => "jakeherman-3tutorial",
-      :timeline_id => 1
+      :timeline_id => Timeline.where(:creator => 'jakeherman-3')[0].id
     }
   end
 

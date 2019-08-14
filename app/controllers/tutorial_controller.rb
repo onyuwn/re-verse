@@ -17,25 +17,28 @@ class TutorialController < ApplicationController
       @focused_memory = 'tutorial'
     end
 
+    if Timeline.where(:creator => 'jakeherman-3').length == 0
+      Timeline.new(:creator => 'jakeherman-3', :name => 'jakeherman-3', :subscribers => 'jakeherman@outlook.com').save
+    end
 
     @user = RSpotify::User.find('jakeherman-3')
-    @current_timeline = Timeline.where(:creator => @user.display_name)
+    @current_timeline = Timeline.where(:creator => "jakeherman-3")
     @playlists =  @user.playlists
     @friendly_playlists = ['Die Lit but in order of best song to worst', 'shirt off', 'Louis V Crotch Rocket', 'Promo Video']
 
     @friendly_playlists.each do |fp|
-      if Track.where(:playlist_name => fp, :username => @user.display_name.to_s + "tutorial").length == 0
+      if Track.where(:playlist_name => fp, :username => "jakeherman-3tutorial").length == 0
         Track.create(get_dummy_track(fp))
       end
     end
 
-    tutorial_moments = Moment.where(:user => @user.display_name.to_s + "tutorial")
+    tutorial_moments = Moment.where(:user => "jakeherman-3tutorial")
     if tutorial_moments.length == 0
       Moment.create(get_dummy_moment())
     end
 
-    @tracks = Track.where(:username => @user.display_name + "tutorial").order(:memory_date)
-    @moments = Moment.where(:user => @user.display_name + "tutorial")
+    @tracks = Track.where(:username => "jakeherman-3tutorial").order(:memory_date)
+    @moments = Moment.where(:user => "jakeherman-3tutorial")
 
     @clean_playlists = []
     @playlists.each do |p|
@@ -159,7 +162,7 @@ class TutorialController < ApplicationController
       if params[:track].eql? nil
         if params[:moment].eql? nil
           params.require(:timeline).permit!
-          current_subs = Timeline.where(:creator => @user.display_name)[0].subscribers.to_s
+          current_subs = Timeline.where(:creator => @user.email)[0].subscribers.to_s
           Timeline.create(:creator => params[:timeline][:creator], :subscribers => current_subs + "," + params[:timeline][:subscribers].to_s, :name => params[:timeline][:name])
         else
           params.require(:moment).permit!
