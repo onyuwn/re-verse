@@ -3,114 +3,33 @@
   <head>
   </head>
 
-  <body>
-    <div class="modal fade" id="addMemory" tabindex="-1" role="dialog" aria-labelledby="addMemoryModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addMemoryModalLabel">Add Memory</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">x</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <%= render "playlists/memory_form" %>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <nav class="navbar navbar-dark shadow">
-      <% if params[:focused_moment] != nil %>
-        <% (1..12).each do |i| %>
-          <% if @tlhash[i] != nil && @tlhash[i][1] != nil %>
-            <a href="/playlists/index" class="navbar-brand mb-0 h1"> <%= @tlhash[i][1][0][2].name %> in focus</a>
-          <% end %>
-        <% end %>
-      <% else %>
-        <a href="/friends/index" class="navbar-brand mb-0 h1"> <%= @user.email %>'s timeline</a>
-      <% end %>
+      <a href="/friends/index" class="navbar-brand mb-0 h1"> <%= params[:shared] %>'s timeline</a>
       <ul class="nav nav-pills">
       </ul>
     </nav>
 
     <div id="timeline-container">
-
-      <div id="month-bar">
-        <% (1..12).each do |i| %>
-          <% if @months[i] != nil && @months_colors[i] != nil%>
-            <p class="month-bar-item" style="width: <%= (@months[i].to_i * 25.5) - (i/4) %>%; background-color:<%= @months_colors[i] %>"><span class="badge badge-pill badge-light"><%= Date::MONTHNAMES[i] %></span></p>
+      <h3>Memories</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Track</th>
+            <th scope="col">Memory</th>
+            <th scope="col">Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tracks.each_with_index do |t, i| %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= t.title %></td>
+              <td><%= t.memory %></td>
+              <td><%= t.imageurl %></td>
+            </tr>
           <% end %>
-        <% end %>
-      </div>
-
-      <% (1..12).each do |i| %>
-        <% if @tlhash[i] != nil && params[:focused_moment] == nil%>
-          <% if @tlhash[i][1] != nil %>
-            <div id='timeline-item' class='moment-icon <%=@tlhash[i][1][0][2].name.to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "") %>'>
-              <ul>
-                <%= inline_svg('moment.svg', id: 'moment-icon', size: "100% * 100%") %>
-                <li><span class="badge badge-pill badge-dark"><%= @tlhash[i][1][0][2].name.to_s %></span></li>
-              </ul>
-            </div>
-          <% end %>
-          <% @tlhash[i][0].each do |item| %>
-            <% if item.class == RSpotify::Playlist %>
-              <div id='timeline-item' class='playlist-dob <%= item.name.to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "") %>'>
-                <ul>
-                  <li><span class="badge badge-pill badge-dark"><%= item.name.to_s %></span></li>
-                  <li><%= image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%") %></li>
-                  <li><span class="badge badge-pill badge-dark">Playlist created on <%=item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s%></span></li>
-                </ul>
-              </div>
-            <% else %>
-              <% if item[1] != nil %>
-                <div id='timeline-item' class='track-item <%= item[0].title.gsub(/[^a-z ]/, '').gsub(/\s+/, "") %>'>
-                  <ul>
-                    <li><span class="badge badge-pill badge-dark"><%= item[0].title %></span></li>
-                     <li><%= image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%") %></li>
-                    <% if !item[2].eql? nil %>
-                      <li><h1 class="moment-id label label-default"><%= item[2].name %></h1></li>
-                    <% end %>
-                    <li><span class="badge badge-pill badge-dark">Memory from <%= item[0].memory_date.to_s %></span></li>
-                    <% if params[:edit].eql? "true" %>
-                      <li class="track-delete-button"><%= link_to "destroy", {"controller" => "playlists", "action" => "destroy", "track_title" => item[0].title}%></li>
-                    <% end %>
-                  </ul>
-                </div>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% elsif params[:focused_moment] != nil %>
-          <% if @tlhash[i] != nil && @tlhash[i][1] != nil %>
-            <% if @tlhash[i][1][0][2].name == params[:focused_moment] %>
-              <% @tlhash[i][1].each do |item| %>
-                <div id='timeline-item' class='track-item <%=item[0].title.gsub(/[^a-z ]/, '').gsub(/\s+/, "")%>'>
-                  <ul>
-                    <li><%= link_to image_tag(item[1].album.images[0]['url'], class: "track-cover", title: item[0].title, height: "80%", width:"80%", "data-toggle" => "popover", "data-content" => "memory from " + item[0].memory_date.to_s, "data-trigger" => "hover", "data-placement" => "top"), {:controller => 'playlists', :action => 'timeline', :playlist => item[0].playlist_name, :user => @user.to_hash, :track => item[0].title.to_s}, id:item[0].title, class: "timeline-item" %></li>
-                  </ul>
-                </div>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
+        </tbody>
+      </table>
     </div>
-
-    <script language="javascript" type="text/javascript">
-      var destroyShowing = '<%= params[:edit] %>' === 'true';
-
-      $(document).ready(function() {
-        $(".toast").show();
-        console.log("going to <%=@focused_memory %>");
-        $(".<%=@focused_memory %>").fadeTo(10, 0.1);
-        $('#timeline-container').animate({
-            scrollLeft: $(".<%=@focused_memory %>").offset().left - ($(".<%=@focused_memory %>").offset().left * .05)
-        }, 2000, "swing", function() {
-          $(".<%=@focused_memory %>").fadeTo(2000, 1);
-        });
-      });
-    </script>
-
-  </body>
 </html>
