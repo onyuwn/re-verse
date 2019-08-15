@@ -133,7 +133,9 @@ class PlaylistsController < ApplicationController
         if params[:moment].eql? nil
           params.require(:timeline).permit!
           current_subs = Timeline.where(:creator => @user.email)[0].subscribers.to_s
-          Timeline.create(:creator => params[:timeline][:creator], :subscribers => current_subs + "," + params[:timeline][:subscribers].to_s, :name => params[:timeline][:name])
+          tid = Timeline.where(:creator => session[:user]['email'])[0].id
+          Timeline.update(tid, :subscribers => current_subs + "," + params[:timeline][:subscribers].to_s)
+          Rails.logger.info "SHARING"
         else
           params.require(:moment).permit!
           Moment.new(params[:moment]).save
