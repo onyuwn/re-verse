@@ -144,11 +144,32 @@ class PlaylistsController < ApplicationController
         Rails.logger.debug "saving new track"
         Rails.logger.debug params[:track]
         params.require(:track).permit!
-        t = Track.new(params[:track])
-        t.save
-
-        Rails.logger.debug t.errors.full_messages
-        redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+        #check form
+        uhohs = ""
+        dont_save = false
+        if params[:track][:title].length == 0
+          uhohs += "no song selected,"
+          dont_save = true
+        end
+        if params[:track][:memory_date].length == 0
+          uhohs += "no date,"
+          dont_save = true
+        end
+        if params[:track][:memory].length == 0
+          uhohs += "no memory written,"
+          dont_save = true
+        end
+        if params[:track][:imageurl].length == 0
+          uhohs += "no image"
+          dont_save = true
+        end
+        if !dont_save
+          t = Track.new(params[:track])
+          t.save
+          redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+        else
+          redirect_to :action => "index", :controller => "playlists", :errors => uhohs
+        end
       end
     end
     Rails.logger.info @months.inspect
