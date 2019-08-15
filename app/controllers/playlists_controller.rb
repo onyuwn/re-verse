@@ -153,35 +153,41 @@ class PlaylistsController < ApplicationController
   end
 
   def timeline
-    @playlist_name = params[:playlist]
-    @track_name = params[:track]
-    @user = RSpotify::User.new(session[:user])
-    @playlists = @user.playlists
-    @current_timeline = Timeline.where(:creator => @user.email)
+    if request.method.eql? "POST"
+      ttt = Track.where(:title => params[:track][:title], :username => params[:track][:username])[0].id
+      Track.update(ttt, :memory => params[:track][:memory], :imageurl => params[:track][:imageurl], :memory_date => params[:track][:memory_date])
+      redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+    else
+      @playlist_name = params[:playlist]
+      @track_name = params[:track]
+      @user = RSpotify::User.new(session[:user])
+      @playlists = @user.playlists
+      @current_timeline = Timeline.where(:creator => @user.email)
 
-    @playlists.each do |p|
-      if p.name.eql? @playlist_name
-        @playlist = p
-        break
+      @playlists.each do |p|
+        if p.name.eql? @playlist_name
+          @playlist = p
+          break
+        end
       end
-    end
 
-    @playlist.tracks.each do |t|
-      if t.name.eql? @track_name
-        @track = t
-        break
+      @playlist.tracks.each do |t|
+        if t.name.eql? @track_name
+          @track = t
+          break
+        end
       end
-    end
 
-    @tracks = Track.where(:username => @user.email, :playlist_name => @playlist_name, :title => @track_name)
+      @tracks = Track.where(:username => @user.email, :playlist_name => @playlist_name, :title => @track_name)
 
-    @playlists_h = {}
-    @playlists.each do |p|
-      track_names = []
-      p.tracks.each do |t|
-        track_names << t.name
+      @playlists_h = {}
+      @playlists.each do |p|
+        track_names = []
+        p.tracks.each do |t|
+          track_names << t.name
+        end
+        @playlists_h[p.name] = track_names
       end
-      @playlists_h[p.name] = track_names
     end
   end
 
@@ -201,10 +207,14 @@ class PlaylistsController < ApplicationController
       end
 
       @user = RSpotify::User.new(session[:user])
-      redirect_to :action => "timeline", :user => @user.to_hash, :offset => params[:offset], :playlist => params[:track][:playlist_name]
+      redirect_to :action => "timeline", :playlist => params[:track][:playlist_name]
     else
 
     end
+  end
+
+  def update
+
   end
 
   def create

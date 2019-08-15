@@ -103,7 +103,7 @@
               <div id='timeline-item' class='playlist-dob <%= item.name.to_s.gsub(/[^a-z ]/, '').gsub(/\s+/, "") %>'>
                 <ul>
                   <li><span class="badge badge-pill badge-dark"><%= item.name.to_s %></span></li>
-                  <li><%= link_to image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%"), {:controller => 'playlists', :action => 'timeline', :playlist => item.name} %></li>
+                  <li><%= image_tag(item.images[0]['url'], id: item.name.to_s, class: "playlist-cover", title: item.name, height:"80%", width:"80%") %></li>
                   <li><span class="badge badge-pill badge-dark">Playlist created on <%=item.tracks_added_at[item.tracks_added_at.keys[0]].to_date.to_s%></span></li>
                 </ul>
               </div>

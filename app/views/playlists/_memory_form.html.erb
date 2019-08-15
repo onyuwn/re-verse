@@ -15,11 +15,18 @@
   </p>
 
   <script language="javascript" type="text/javascript">
+    var previousPl = ""
     function updateTrackList()
     {
       var e = document.getElementById('track_playlist_name');
       var playlistName = e.options[e.selectedIndex].value;
       document.getElementById(playlistName).style.display = "block";
+      try {
+        document.getElementById(previousPl).style.display = "none";
+      } catch (e) {
+        console.log(previousPl);
+      }
+      previousPl = playlistName;
     }
   </script>
 
