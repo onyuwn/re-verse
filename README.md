@@ -8,14 +8,14 @@ ReVerse is a web app that allows spotify users to associate fond memories with t
 This is a basic timeline. All of your memories are displayed here by month, and then inside of each month theya re sorted by date.
 
 ## Memories
-Memories are the most basic aspect of a timeline. They are references to a certain song that contain your media and written text. This is what a memory looks like on your timeline:
+Memories are the most basic aspect of a timeline. They are references to a certain song that contain your media and written text. Think of memories like an entry in a journal. This is what a memory looks like on your timeline:
 ![memorytl](https://i.imgur.com/fB7iAIG.png)
-
-This is what a memory looks like when you click on it, the data you specified is shown:
-![shownmem](https://i.imgur.com/4IHhNHR.png)
 
 To add a memory simply click the "add memory button" on the timeline nav. This is what the form looks like:
 ![memform](https://i.imgur.com/0UrqmY1.png)
+
+This is what a memory looks like when you click on it, the data you specified is shown:
+![shownmem](https://i.imgur.com/qxna4et.png)
 
 Here you can write about what this song means to you, specify a relative date, and attach a photo. The imageurl could be a link to the photo in google drive, google images, imgur, etc. We are working on direct uploads.
 
@@ -33,7 +33,11 @@ To manage your subscriptions, click on 'manage':
 ![maag](https://i.imgur.com/kjvoO1e.png)
 
 ## Friend Activity
+When users first log in, they are taken to the friend activity feed. Users who have shared their timeline with you will show up here. Their activity from the past day populates this feed:
+![feed](https://i.imgur.com/6nNa4JR.png)
 
+You can manage your subscriptions by clicking the "manage" button in the top nav:
+![maaeee](https://i.imgur.com/SwYWPVD.png)
 
 ## Developers: Install rails on your computer
 This app utilizes Ruby on Rails, to run you need to set up a development environment on your computer.
