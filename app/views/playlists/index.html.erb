@@ -67,6 +67,7 @@
         <li class="nav-item"><%= link_to "define moment", "#defineMoment", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#defineMoment'} %></li>
         <li class="nav-item"><%= link_to "share timeline", "#shareTimeline", {'data-toggle' => 'modal', 'class' => 'nav-link', 'data-target' => '#shareTimeline'} %></li>
         <li class="nav-item"><%= link_to "friend activity", {:controller => 'friends', :action => 'index'}, {'class' => 'nav-link'} %></li>
+        <li class="nav-item"><a class="nav-link" href="https://github.com/Hermje/re-verse/blob/master/README.md">help</a></li>
         <div id="filter-controls">
           <li class="nav-item icon">
             <% if params[:edit].eql? 'true' %>
