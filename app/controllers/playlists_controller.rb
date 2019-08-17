@@ -159,12 +159,13 @@ class PlaylistsController < ApplicationController
           uhohs += "no memory written,"
           dont_save = true
         end
-        if params[:track][:imageurl].length == 0
-          uhohs += "no image"
-          dont_save = true
-        end
+        # if params[:track][:imageurl].length == 0
+        #   uhohs += "no image"
+        #   dont_save = true
+        # end
         if !dont_save
           t = Track.new(params[:track])
+          t.image.attach(params[:track][:image])
           t.save
           redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
         else
@@ -177,9 +178,20 @@ class PlaylistsController < ApplicationController
 
   def timeline
     if request.method.eql? "POST"
-      ttt = Track.where(:title => params[:track][:title], :username => params[:track][:username])[0].id
-      Track.update(ttt, :memory => params[:track][:memory], :imageurl => params[:track][:imageurl], :memory_date => params[:track][:memory_date])
-      redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+      if params[:track][:image] == nil
+        ttt = Track.where(:title => params[:track][:title], :username => params[:track][:username])[0].id
+        Track.update(ttt, :memory => params[:track][:memory], :imageurl => params[:track][:imageurl], :memory_date => params[:track][:memory_date])
+        redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+      else
+        params.require(:track).permit(:title, :image, :playlist_name)
+        Rails.logger.info "attaching"
+        Rails.logger.info params[:track][:image]
+        track = Track.where(:username => session[:user]['email'], :title => params[:track][:title])[0]
+        Rails.logger.info "track hehe"
+        Rails.logger.info track.inspect
+        track.image.attach(params[:track][:image])
+        redirect_to :action => "timeline", :controller => "playlists", :playlist => params[:track][:playlist_name], :track => params[:track][:title]
+      end
     else
       @playlist_name = params[:playlist]
       @track_name = params[:track]

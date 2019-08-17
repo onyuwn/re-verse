@@ -14,17 +14,38 @@
   </div>
 </div>
 
+<div class="modal fade" id="addImage" tabindex="-1" role="dialog" aria-labelledby="addImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addImageModalLabel">Edit Memory</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "playlists/add_image_form" %>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <nav class="navbar navbar-dark shadow">
   <a href="/playlists/index" class="navbar-brand mb-0 h1"><%= @user.email %>'s timeline</a>
   <ul class="nav nav-pills">
+    <li class='nav-item'><%= link_to "back", {:controller => 'playlists', :action => 'index'} %></li>
     <li class='nav-item'><%= link_to "edit", "#editMemory", {'data-toggle' => 'modal', 'id' => 'edit', 'class' => 'nav-link', 'data-target' => '#editMemory', 'id' => 'edit-button'} %></li>
   </ul>
 </nav>
 
 <div id="current-memory">
   <div id="track-art-container">
-    <img class='track-art' src=<%= @tracks[0].imageurl %>/>
+    <% if @tracks[0].image.attached? %>
+      <img class='track-art' src=<%= url_for(@tracks[0].image) %>/>
+    <% else %>
+      <%= link_to "add image", "#addImage", {'data-toggle' => 'modal', 'id' => 'imageadd', 'class' => 'nav-link', 'data-target' => '#addImage', 'id' => 'image-button'} %>
+    <% end %>
   </div>
 
   <% unless @tracks[0].nil? %>

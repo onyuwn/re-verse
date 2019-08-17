@@ -10,8 +10,12 @@
   </p>
 
   <p>
-    <%= form.label :imageurl %><br>
-    <%= form.text_field :imageurl, :value => @tracks[0].imageurl %>
+    <%= form.label "Image" %><br>
+    <%= form.file_field :image, :value => @tracks[0].image %>
+  </p>
+
+  <p>
+    <%= form.hidden_field :imageurl, :value => @tracks[0].imageurl %>
   </p>
 
   <p>

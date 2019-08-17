@@ -1,0 +1,6 @@
+<%= form_with scope: :track, url: playlists_timeline_path, local: true do |form| %>
+  <p><%= form.file_field :image %><p>
+  <p><%= form.hidden_field :title, :value => @tracks[0].title %><p>
+  <p><%= form.hidden_field :playlist_name, :value => @tracks[0].playlist_name %><p>
+  <p><%= form.submit %></p>
+<% end %>

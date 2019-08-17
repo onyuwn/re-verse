@@ -1,4 +1,4 @@
-<a href="https://github.com/Hermje/re-verse/blob/master/README.md#memories" class="btn btn-primary">Help</a> 
+<a href="https://github.com/Hermje/re-verse/blob/master/README.md#memories" class="btn btn-primary">Help</a>
 <%= form_with scope: :track, url: playlists_index_path, local: true do |form| %>
   <%= form.label "Select song from playlist:" %>
   <%= form.select :playlist_name, @playlists.collect {|p| [p.name, p.name]}, {include_blank: true}, {onChange: "updateTrackList()"}%>
@@ -24,8 +24,12 @@
   </p>
 
   <p>
-    <%= form.label "URL of image" %><br>
-    <%= form.text_field :imageurl %>
+    <%= form.label "Upload image related to memory (optional)" %><br>
+    <%= form.file_field :image %>
+  <p>
+
+  <p>
+    <%= form.hidden_field :imageurl, :value => "fart" %>
   </p>
 
   <script language="javascript" type="text/javascript">
