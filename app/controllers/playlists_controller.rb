@@ -138,7 +138,28 @@ class PlaylistsController < ApplicationController
           Rails.logger.info "SHARING"
         else
           params.require(:moment).permit!
-          Moment.new(params[:moment]).save
+          uhohs = ""
+          dont_save = false
+
+          if params[:moment][:name].length == 0
+            uhohs += "no name entered, "
+            dont_save = true
+          end
+          if params[:moment][:start_date].length == 0
+            uhohs += "no start date, "
+            dont_save = true
+          end
+          if params[:moment][:end_date].length == 0
+            uhohs += "no end date, "
+            dont_save = true
+          end
+
+          if dont_save
+            redirect_to :action => "index", :controller => "playlists", :errors_moment => uhohs
+          else
+            Moment.new(params[:moment]).save
+            redirect_to :action => "index", :controller => "playlists", :new_item => params[:moment][:name].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
+          end
         end
       else
         Rails.logger.debug "saving new track"
@@ -169,7 +190,7 @@ class PlaylistsController < ApplicationController
           t.save
           redirect_to :action => "index", :controller => "playlists", :new_item => params[:track][:title].gsub(/[^a-z ]/, '').gsub(/\s+/, "")
         else
-          redirect_to :action => "index", :controller => "playlists", :errors => uhohs
+          redirect_to :action => "index", :controller => "playlists", :errors_memory => uhohs
         end
       end
     end

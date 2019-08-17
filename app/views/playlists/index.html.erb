@@ -159,8 +159,10 @@
       <ul class="nav nav-pills">
         <li class="nav-item"><input class="btn btn-primary" id="hide-playlists" type="button" value="Hide Playlists"></input></li>
       </ul>
-      <% if params[:errors] != nil %>
-        <h4>Memory not created: <%= params[:errors] %><br/><a href="/playlists/index">ok :(</a></h4>
+      <% if params[:errors_memory] != nil %>
+        <h4>Memory not created: <%= params[:errors_memory] %><br/><a href="/playlists/index">ok :(</a></h4>
+      <% elsif params[:errors_moment] != nil %>
+        <h4>Moment not created: <%= params[:errors_moment] %><br/><a href="/playlists/index">ok :(</a></h4>
       <% end %>
     </div>
 
