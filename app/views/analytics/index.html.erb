@@ -23,7 +23,31 @@
           <td><%= t.subscribers.split(',').length %></td>
           <td><%= Track.where(:username => t.creator).length %>
           <td><%= link_to "timeline", {:controller => 'shared', :action => 'index', :shared => t.creator} %></td>
-          <td><%= link_to "destroy", {:controller => 'analytics', :action => 'destroy', :user => t.creator} %></td>
+          <td><%= link_to "destroy", {:controller => 'analytics', :action => 'destroy_timeline', :user => t.creator} %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="data-container">
+  <h3>Timelines</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User</th>
+        <th scope="col">moment</th>
+        <th scope="col">Destroy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @all_moms.each_with_index do |m, i| %>
+        <tr>
+          <td><%= i+1 %></td>
+          <td><%= m.user %></td>
+          <td><%= m.name %></td>
+          <td><%= link_to "destroy", {:controller => 'analytics', :action => 'destroy_moment', :user => m.user, :moment => m.name} %></td>
         </tr>
       <% end %>
     </tbody>
