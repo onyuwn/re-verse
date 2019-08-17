@@ -26,7 +26,11 @@
               <td><%= i+1 %></td>
               <td><%= t.title %></td>
               <td><%= t.memory %></td>
-              <td><%= t.imageurl %></td>
+              <td>
+                <% if t.image.attached? %>
+                    <img class='track-art' src=<%= url_for(t.image) %>/>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
