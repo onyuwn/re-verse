@@ -2,7 +2,7 @@
 <html>
   <head>
   </head>
-
+  <body>
     <nav class="navbar navbar-dark shadow">
       <a href="/friends/index" class="navbar-brand mb-0 h1"> <%= params[:shared] %>'s timeline</a>
       <ul class="nav nav-pills">
@@ -18,6 +18,7 @@
             <th scope="col">Track</th>
             <th scope="col">Memory</th>
             <th scope="col">Image</th>
+            <th scope="col">Debug Info</th>
           </tr>
         </thead>
         <tbody>
@@ -31,9 +32,13 @@
                     <img class='track-art' src=<%= url_for(t.image) %>/>
                 <% end %>
               </td>
+              <td>
+                <p><%= t.image.attachment.blob.filename %>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
+  </body>
 </html>
