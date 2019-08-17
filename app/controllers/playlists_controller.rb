@@ -24,7 +24,9 @@ class PlaylistsController < ApplicationController
     @current_timeline = Timeline.where(:creator => @user.email)
     @playlists =  @user.playlists
     @tracks = Track.where(:username => @user.email).order(:memory_date)
+    @tracks_count = Track.where(:username => @user.email).length
     @moments = Moment.where(:user => @user.email)
+    @moments_count = Moment.where(:user => @user.email).length
 
     @months = {}
 
