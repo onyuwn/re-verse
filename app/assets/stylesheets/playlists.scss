@@ -204,7 +204,7 @@ body {
   padding:2%;
   margin-left:35%;
   margin-right:35%;
-  border-radius: 1%;
+  border-radius: 10px;
 }
 
 #track-art-container {
@@ -272,4 +272,18 @@ a, a:hover, a:focus {
 
 #month-bar-label {
   background:white !important;
+}
+
+#memory-info {
+  width:50%;
+  display:block;
+  position:absolute;
+  margin: auto;
+  background-color: #ededed;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px black;
+  padding:1%;
+  left: 25%;
+  z-index: 0;
+  bottom: 5%;
 }
