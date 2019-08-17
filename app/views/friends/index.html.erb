@@ -40,22 +40,14 @@
 </nav>
 
 <div id="feed">
-  <% @sharedtls.each do |s| %>
-    <div id="feed-item" class="rounded">
-      <div id="item-content">
-        <h4 id="item-header"><%= s.name %></h4>
-        <p><%= s.creator %></p>
-        <p><%= s.moment.count %></p>
-      </div>
-    </div>
-  <% end %>
-
   <% @memory_posts.each do |s| %>
     <div id="feed-item" class="rounded">
       <div id="item-content">
-        <h4 id="item-header"><%= s.username %> updated a memory:</h4>
-        <p><%= s.title %></p>
-        <p><%= s.memory %></p>
+        <div id="item-header"><%= link_to s.username, {:controller => 'shared', :action => 'index', :shared => s.username} %> updated <em><%=s.title%> - <%= s.memory_date.to_s %></em></div>
+        <% if s.image.attached? %>
+          <p><img class='feed-track-art' src=<%= url_for(s.image) %>/></p>
+        <% end %>
+        <p id="memory-text">"<%= s.memory %>"</p>
       </div>
     </div>
   <% end %>

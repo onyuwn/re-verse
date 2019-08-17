@@ -18,9 +18,6 @@ class FriendsController < ApplicationController
       st.track.each do |track|
         if track.updated_at > (Time.now - 86400)
           @memory_posts << track
-          Rails.logger.debug track.updated_at
-          Rails.logger.debug (Time.now - 86400)
-          Rails.logger.debug (Time.now)
         end
       end
     end
