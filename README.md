@@ -12,10 +12,10 @@ Memories are the most basic aspect of a timeline. They are references to a certa
 ![memorytl](https://i.imgur.com/fB7iAIG.png)
 
 This is what a memory looks like when you click on it, the data you specified is shown:
-![shownmem](https://i.imgur.com/dllmu47.png)
+![shownmem](https://i.imgur.com/4IHhNHR.png)
 
 To add a memory simply click the "add memory button" on the timeline nav. This is what the form looks like:
-![memform](https://i.imgur.com/ng7heZ8.png)
+![memform](https://i.imgur.com/0UrqmY1.png)
 
 Here you can write about what this song means to you, specify a relative date, and attach a photo. The imageurl could be a link to the photo in google drive, google images, imgur, etc. We are working on direct uploads.
 
@@ -31,6 +31,8 @@ To view people subscribed to you, click on 'my profile':
 
 To manage your subscriptions, click on 'manage':
 ![maag](https://i.imgur.com/kjvoO1e.png)
+
+## Friend Activity
 
 
 ## Developers: Install rails on your computer
